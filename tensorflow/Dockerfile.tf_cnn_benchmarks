@@ -1,0 +1,11 @@
+FROM nvcr.io/nvidia/tensorflow:17.09
+
+WORKDIR /opt
+RUN mkdir tf_cnn_benchmarks/
+COPY tf_cnn_benchmarks/*.py tf_cnn_benchmarks/
+RUN touch tf_cnn_benchmarks/__init__.py
+
+COPY ./bench.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/bench.sh
+
+ENTRYPOINT ["bash", "bench.sh"]
