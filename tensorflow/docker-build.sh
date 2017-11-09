@@ -1,1 +1,1 @@
-docker build -t tf-bench -f Dockerfile.tf_cnn_benchmarks .
+docker build -t tensorflow-benchmark -f Dockerfile.tf_cnn_benchmarks .

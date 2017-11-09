@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/tensorflow:17.09
+FROM nvcr.io/nvidia/tensorflow:17.10
 
 WORKDIR /opt
 RUN mkdir tf_cnn_benchmarks/
