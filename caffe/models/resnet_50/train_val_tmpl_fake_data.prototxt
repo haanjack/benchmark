@@ -18,7 +18,8 @@ layer {
   include {
     phase: TRAIN
   }
-  layer {
+}
+layer {
   name: "conv1"
   type: "Convolution"
   bottom: "data"
