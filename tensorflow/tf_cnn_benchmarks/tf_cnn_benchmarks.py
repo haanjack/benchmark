@@ -544,8 +544,11 @@ class BenchmarkCNN(object):
 
     self.image_preprocessor = self.get_image_preprocessor()
     self.init_global_step = 0
+    # Compute required iteration based on computing units for targeting epochs
     self.num_epochs = FLAGS.num_epochs
-    self.sample_size = FLAGS.sample_size ##
+    self.sample_size = FLAGS.sample_size 
+    self.num_iter = self.sample_size * self.num_epochs / self.num_batches / self.num_gpus / len(self.worker_hosts)
+    self.num_iter = 100
 
   def print_info(self):
     """Print basic information."""
@@ -683,9 +686,7 @@ class BenchmarkCNN(object):
       global_step_watcher = GlobalStepWatcher(
           sess, global_step,
           len(self.worker_hosts) * self.num_warmup_batches +
-          self.init_global_step,
-          self.sample_size * self.num_epochs  ## Jack Han: Modified this for Samsung Display BMT purpose
-          / self.num_batches / self.num_gpus / len(self.worker_hosts) )
+          self.init_global_step, self.num_iter)
       global_step_watcher.start()
 
       if self.graph_file is not None:
