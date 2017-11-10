@@ -18,12 +18,7 @@ layer {
   include {
     phase: TRAIN
   }
-  dummy_data_param {
-    shape: { dim: REPLACEBATCHSIZE}
-    data_filler: { type: 'constant' value: 0.001 }
-  }
-}
-layer {
+  layer {
   name: "conv1"
   type: "Convolution"
   bottom: "data"
@@ -31,20 +26,19 @@ layer {
   convolution_param {
     num_output: 64
     kernel_size: 7
-    stride: 2
     pad: 3
+    stride: 2
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "conv1_bn"
+  name: "conv1/bn"
   type: "BatchNorm"
   bottom: "conv1"
-  top: "conv1_bn"
+  top: "conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -52,15 +46,15 @@ layer {
   }
 }
 layer {
-  name: "conv1_relu"
+  name: "conv1/relu"
   type: "ReLU"
-  bottom: "conv1_bn"
-  top: "conv1_bn"
+  bottom: "conv1/bn"
+  top: "conv1/bn"
 }
 layer {
   name: "pool1"
   type: "Pooling"
-  bottom: "conv1_bn"
+  bottom: "conv1/bn"
   top: "pool1"
   pooling_param {
     pool: MAX
@@ -69,7 +63,7 @@ layer {
   }
 }
 #
-# ResBlock2
+# res2
 #
 layer {
   name: "res2.1.conv1"
@@ -79,20 +73,17 @@ layer {
   convolution_param {
     num_output: 64
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.1.conv1_bn"
+  name: "res2.1.conv1/bn"
   type: "BatchNorm"
   bottom: "res2.1.conv1"
-  top: "res2.1.conv1_bn"
+  top: "res2.1.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -100,33 +91,31 @@ layer {
   }
 }
 layer {
-  name: "res2.1.conv1_relu"
+  name: "res2.1.conv1/relu"
   type: "ReLU"
-  bottom: "res2.1.conv1_bn"
-  top: "res2.1.conv1_bn"
+  bottom: "res2.1.conv1/bn"
+  top: "res2.1.conv1/bn"
 }
 layer {
   name: "res2.1.conv2"
   type: "Convolution"
-  bottom: "res2.1.conv1_bn"
+  bottom: "res2.1.conv1/bn"
   top: "res2.1.conv2"
   convolution_param {
     num_output: 64
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.1.conv2_bn"
+  name: "res2.1.conv2/bn"
   type: "BatchNorm"
   bottom: "res2.1.conv2"
-  top: "res2.1.conv2_bn"
+  top: "res2.1.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -134,33 +123,30 @@ layer {
   }
 }
 layer {
-  name: "res2.1.conv2_relu"
+  name: "res2.1.conv2/relu"
   type: "ReLU"
-  bottom: "res2.1.conv2_bn"
-  top: "res2.1.conv2_bn"
+  bottom: "res2.1.conv2/bn"
+  top: "res2.1.conv2/bn"
 }
 layer {
   name: "res2.1.conv3"
   type: "Convolution"
-  bottom: "res2.1.conv2_bn"
+  bottom: "res2.1.conv2/bn"
   top: "res2.1.conv3"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.1.conv3_bn"
+  name: "res2.1.conv3/bn"
   type: "BatchNorm"
   bottom: "res2.1.conv3"
-  top: "res2.1.conv3_bn"
+  top: "res2.1.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -175,20 +161,17 @@ layer {
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.1.skipConv_bn"
+  name: "res2.1.skipConv/bn"
   type: "BatchNorm"
   bottom: "res2.1.skipConv"
-  top: "res2.1.skipConv_bn"
+  top: "res2.1.skipConv/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -196,11 +179,11 @@ layer {
   }
 }
 layer {
-  name: "res2.1.eltwise"
+  name: "res2.1.sum"
   type: "Eltwise"
-  bottom: "res2.1.conv3_bn"
-  bottom: "res2.1.skipConv_bn"
-  top: "res2.1.eltwise"
+  bottom: "res2.1.conv3/bn"
+  bottom: "res2.1.skipConv/bn"
+  top: "res2.1.sum"
   eltwise_param {
     operation: SUM
   }
@@ -208,31 +191,28 @@ layer {
 layer {
   name: "res2.1.relu"
   type: "ReLU"
-  bottom: "res2.1.eltwise"
-  top: "res2.1.eltwise"
+  bottom: "res2.1.sum"
+  top: "res2.1.sum"
 }
 layer {
   name: "res2.2.conv1"
   type: "Convolution"
-  bottom: "res2.1.eltwise"
+  bottom: "res2.1.sum"
   top: "res2.2.conv1"
   convolution_param {
     num_output: 64
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.2.conv1_bn"
+  name: "res2.2.conv1/bn"
   type: "BatchNorm"
   bottom: "res2.2.conv1"
-  top: "res2.2.conv1_bn"
+  top: "res2.2.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -240,33 +220,31 @@ layer {
   }
 }
 layer {
-  name: "res2.2.conv1_relu"
+  name: "res2.2.conv1/relu"
   type: "ReLU"
-  bottom: "res2.2.conv1_bn"
-  top: "res2.2.conv1_bn"
+  bottom: "res2.2.conv1/bn"
+  top: "res2.2.conv1/bn"
 }
 layer {
   name: "res2.2.conv2"
   type: "Convolution"
-  bottom: "res2.2.conv1_bn"
+  bottom: "res2.2.conv1/bn"
   top: "res2.2.conv2"
   convolution_param {
     num_output: 64
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.2.conv2_bn"
+  name: "res2.2.conv2/bn"
   type: "BatchNorm"
   bottom: "res2.2.conv2"
-  top: "res2.2.conv2_bn"
+  top: "res2.2.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -274,33 +252,30 @@ layer {
   }
 }
 layer {
-  name: "res2.2.conv2_relu"
+  name: "res2.2.conv2/relu"
   type: "ReLU"
-  bottom: "res2.2.conv2_bn"
-  top: "res2.2.conv2_bn"
+  bottom: "res2.2.conv2/bn"
+  top: "res2.2.conv2/bn"
 }
 layer {
   name: "res2.2.conv3"
   type: "Convolution"
-  bottom: "res2.2.conv2_bn"
+  bottom: "res2.2.conv2/bn"
   top: "res2.2.conv3"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.2.conv3_bn"
+  name: "res2.2.conv3/bn"
   type: "BatchNorm"
   bottom: "res2.2.conv3"
-  top: "res2.2.conv3_bn"
+  top: "res2.2.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -308,39 +283,11 @@ layer {
   }
 }
 layer {
-  name: "res2.2.skipConv"
-  type: "Convolution"
-  bottom: "res2.1.eltwise"
-  top: "res2.2.skipConv"
-  convolution_param {
-    num_output: 256
-    kernel_size: 1
-    stride: 1
-    pad: 0
-    weight_filler {
-      type: "msra"
-      std: 0.010
-    }
-    bias_term: false
-  }
-}
-layer {
-  name: "res2.2.skipConv_bn"
-  type: "BatchNorm"
-  bottom: "res2.2.skipConv"
-  top: "res2.2.skipConv_bn"
-  batch_norm_param {
-    moving_average_fraction: 0.9
-    eps: 0.0001
-    scale_bias: true
-  }
-}
-layer {
-  name: "res2.2.eltwise"
+  name: "res2.2.sum"
   type: "Eltwise"
-  bottom: "res2.2.conv3_bn"
-  bottom: "res2.2.skipConv_bn"
-  top: "res2.2.eltwise"
+  bottom: "res2.2.conv3/bn"
+  bottom: "res2.1.sum"
+  top: "res2.2.sum"
   eltwise_param {
     operation: SUM
   }
@@ -348,31 +295,28 @@ layer {
 layer {
   name: "res2.2.relu"
   type: "ReLU"
-  bottom: "res2.2.eltwise"
-  top: "res2.2.eltwise"
+  bottom: "res2.2.sum"
+  top: "res2.2.sum"
 }
 layer {
   name: "res2.3.conv1"
   type: "Convolution"
-  bottom: "res2.2.eltwise"
+  bottom: "res2.2.sum"
   top: "res2.3.conv1"
   convolution_param {
     num_output: 64
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.3.conv1_bn"
+  name: "res2.3.conv1/bn"
   type: "BatchNorm"
   bottom: "res2.3.conv1"
-  top: "res2.3.conv1_bn"
+  top: "res2.3.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -380,33 +324,31 @@ layer {
   }
 }
 layer {
-  name: "res2.3.conv1_relu"
+  name: "res2.3.conv1/relu"
   type: "ReLU"
-  bottom: "res2.3.conv1_bn"
-  top: "res2.3.conv1_bn"
+  bottom: "res2.3.conv1/bn"
+  top: "res2.3.conv1/bn"
 }
 layer {
   name: "res2.3.conv2"
   type: "Convolution"
-  bottom: "res2.3.conv1_bn"
+  bottom: "res2.3.conv1/bn"
   top: "res2.3.conv2"
   convolution_param {
     num_output: 64
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.3.conv2_bn"
+  name: "res2.3.conv2/bn"
   type: "BatchNorm"
   bottom: "res2.3.conv2"
-  top: "res2.3.conv2_bn"
+  top: "res2.3.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -414,33 +356,30 @@ layer {
   }
 }
 layer {
-  name: "res2.3.conv2_relu"
+  name: "res2.3.conv2/relu"
   type: "ReLU"
-  bottom: "res2.3.conv2_bn"
-  top: "res2.3.conv2_bn"
+  bottom: "res2.3.conv2/bn"
+  top: "res2.3.conv2/bn"
 }
 layer {
   name: "res2.3.conv3"
   type: "Convolution"
-  bottom: "res2.3.conv2_bn"
+  bottom: "res2.3.conv2/bn"
   top: "res2.3.conv3"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res2.3.conv3_bn"
+  name: "res2.3.conv3/bn"
   type: "BatchNorm"
   bottom: "res2.3.conv3"
-  top: "res2.3.conv3_bn"
+  top: "res2.3.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -448,39 +387,11 @@ layer {
   }
 }
 layer {
-  name: "res2.3.skipConv"
-  type: "Convolution"
-  bottom: "res2.2.eltwise"
-  top: "res2.3.skipConv"
-  convolution_param {
-    num_output: 256
-    kernel_size: 1
-    stride: 1
-    pad: 0
-    weight_filler {
-      type: "msra"
-      std: 0.010
-    }
-    bias_term: false
-  }
-}
-layer {
-  name: "res2.3.skipConv_bn"
-  type: "BatchNorm"
-  bottom: "res2.3.skipConv"
-  top: "res2.3.skipConv_bn"
-  batch_norm_param {
-    moving_average_fraction: 0.9
-    eps: 0.0001
-    scale_bias: true
-  }
-}
-layer {
-  name: "res2.3.eltwise"
+  name: "res2.3.sum"
   type: "Eltwise"
-  bottom: "res2.3.conv3_bn"
-  bottom: "res2.3.skipConv_bn"
-  top: "res2.3.eltwise"
+  bottom: "res2.3.conv3/bn"
+  bottom: "res2.2.sum"
+  top: "res2.3.sum"
   eltwise_param {
     operation: SUM
   }
@@ -488,34 +399,32 @@ layer {
 layer {
   name: "res2.3.relu"
   type: "ReLU"
-  bottom: "res2.3.eltwise"
-  top: "res2.3.eltwise"
+  bottom: "res2.3.sum"
+  top: "res2.3.sum"
 }
 #
-# ResBlock3
+# res3
 #
 layer {
   name: "res3.1.conv1"
   type: "Convolution"
-  bottom: "res2.3.eltwise"
+  bottom: "res2.3.sum"
   top: "res3.1.conv1"
   convolution_param {
     num_output: 128
     kernel_size: 1
     stride: 2
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.1.conv1_bn"
+  name: "res3.1.conv1/bn"
   type: "BatchNorm"
   bottom: "res3.1.conv1"
-  top: "res3.1.conv1_bn"
+  top: "res3.1.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -523,33 +432,31 @@ layer {
   }
 }
 layer {
-  name: "res3.1.conv1_relu"
+  name: "res3.1.conv1/relu"
   type: "ReLU"
-  bottom: "res3.1.conv1_bn"
-  top: "res3.1.conv1_bn"
+  bottom: "res3.1.conv1/bn"
+  top: "res3.1.conv1/bn"
 }
 layer {
   name: "res3.1.conv2"
   type: "Convolution"
-  bottom: "res3.1.conv1_bn"
+  bottom: "res3.1.conv1/bn"
   top: "res3.1.conv2"
   convolution_param {
     num_output: 128
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.1.conv2_bn"
+  name: "res3.1.conv2/bn"
   type: "BatchNorm"
   bottom: "res3.1.conv2"
-  top: "res3.1.conv2_bn"
+  top: "res3.1.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -557,33 +464,30 @@ layer {
   }
 }
 layer {
-  name: "res3.1.conv2_relu"
+  name: "res3.1.conv2/relu"
   type: "ReLU"
-  bottom: "res3.1.conv2_bn"
-  top: "res3.1.conv2_bn"
+  bottom: "res3.1.conv2/bn"
+  top: "res3.1.conv2/bn"
 }
 layer {
   name: "res3.1.conv3"
   type: "Convolution"
-  bottom: "res3.1.conv2_bn"
+  bottom: "res3.1.conv2/bn"
   top: "res3.1.conv3"
   convolution_param {
     num_output: 512
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.1.conv3_bn"
+  name: "res3.1.conv3/bn"
   type: "BatchNorm"
   bottom: "res3.1.conv3"
-  top: "res3.1.conv3_bn"
+  top: "res3.1.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -593,25 +497,23 @@ layer {
 layer {
   name: "res3.1.skipConv"
   type: "Convolution"
-  bottom: "res2.3.eltwise"
+  bottom: "res2.3.sum"
   top: "res3.1.skipConv"
   convolution_param {
     num_output: 512
     kernel_size: 1
     stride: 2
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.1.skipConv_bn"
+  name: "res3.1.skipConv/bn"
   type: "BatchNorm"
   bottom: "res3.1.skipConv"
-  top: "res3.1.skipConv_bn"
+  top: "res3.1.skipConv/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -619,11 +521,11 @@ layer {
   }
 }
 layer {
-  name: "res3.1.eltwise"
+  name: "res3.1.sum"
   type: "Eltwise"
-  bottom: "res3.1.conv3_bn"
-  bottom: "res3.1.skipConv_bn"
-  top: "res3.1.eltwise"
+  bottom: "res3.1.conv3/bn"
+  bottom: "res3.1.skipConv/bn"
+  top: "res3.1.sum"
   eltwise_param {
     operation: SUM
   }
@@ -631,31 +533,28 @@ layer {
 layer {
   name: "res3.1.relu"
   type: "ReLU"
-  bottom: "res3.1.eltwise"
-  top: "res3.1.eltwise"
+  bottom: "res3.1.sum"
+  top: "res3.1.sum"
 }
 layer {
   name: "res3.2.conv1"
   type: "Convolution"
-  bottom: "res3.1.eltwise"
+  bottom: "res3.1.sum"
   top: "res3.2.conv1"
   convolution_param {
     num_output: 128
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.2.conv1_bn"
+  name: "res3.2.conv1/bn"
   type: "BatchNorm"
   bottom: "res3.2.conv1"
-  top: "res3.2.conv1_bn"
+  top: "res3.2.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -663,33 +562,31 @@ layer {
   }
 }
 layer {
-  name: "res3.2.conv1_relu"
+  name: "res3.2.conv1/relu"
   type: "ReLU"
-  bottom: "res3.2.conv1_bn"
-  top: "res3.2.conv1_bn"
+  bottom: "res3.2.conv1/bn"
+  top: "res3.2.conv1/bn"
 }
 layer {
   name: "res3.2.conv2"
   type: "Convolution"
-  bottom: "res3.2.conv1_bn"
+  bottom: "res3.2.conv1/bn"
   top: "res3.2.conv2"
   convolution_param {
     num_output: 128
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.2.conv2_bn"
+  name: "res3.2.conv2/bn"
   type: "BatchNorm"
   bottom: "res3.2.conv2"
-  top: "res3.2.conv2_bn"
+  top: "res3.2.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -697,33 +594,30 @@ layer {
   }
 }
 layer {
-  name: "res3.2.conv2_relu"
+  name: "res3.2.conv2/relu"
   type: "ReLU"
-  bottom: "res3.2.conv2_bn"
-  top: "res3.2.conv2_bn"
+  bottom: "res3.2.conv2/bn"
+  top: "res3.2.conv2/bn"
 }
 layer {
   name: "res3.2.conv3"
   type: "Convolution"
-  bottom: "res3.2.conv2_bn"
+  bottom: "res3.2.conv2/bn"
   top: "res3.2.conv3"
   convolution_param {
     num_output: 512
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.2.conv3_bn"
+  name: "res3.2.conv3/bn"
   type: "BatchNorm"
   bottom: "res3.2.conv3"
-  top: "res3.2.conv3_bn"
+  top: "res3.2.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -731,11 +625,11 @@ layer {
   }
 }
 layer {
-  name: "res3.2.eltwise"
+  name: "res3.2.sum"
   type: "Eltwise"
-  bottom: "res3.2.conv3_bn"
-  bottom: "res3.1.eltwise"
-  top: "res3.2.eltwise"
+  bottom: "res3.2.conv3/bn"
+  bottom: "res3.1.sum"
+  top: "res3.2.sum"
   eltwise_param {
     operation: SUM
   }
@@ -743,31 +637,28 @@ layer {
 layer {
   name: "res3.2.relu"
   type: "ReLU"
-  bottom: "res3.2.eltwise"
-  top: "res3.2.eltwise"
+  bottom: "res3.2.sum"
+  top: "res3.2.sum"
 }
 layer {
   name: "res3.3.conv1"
   type: "Convolution"
-  bottom: "res3.2.eltwise"
+  bottom: "res3.2.sum"
   top: "res3.3.conv1"
   convolution_param {
     num_output: 128
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.3.conv1_bn"
+  name: "res3.3.conv1/bn"
   type: "BatchNorm"
   bottom: "res3.3.conv1"
-  top: "res3.3.conv1_bn"
+  top: "res3.3.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -775,33 +666,31 @@ layer {
   }
 }
 layer {
-  name: "res3.3.conv1_relu"
+  name: "res3.3.conv1/relu"
   type: "ReLU"
-  bottom: "res3.3.conv1_bn"
-  top: "res3.3.conv1_bn"
+  bottom: "res3.3.conv1/bn"
+  top: "res3.3.conv1/bn"
 }
 layer {
   name: "res3.3.conv2"
   type: "Convolution"
-  bottom: "res3.3.conv1_bn"
+  bottom: "res3.3.conv1/bn"
   top: "res3.3.conv2"
   convolution_param {
     num_output: 128
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.3.conv2_bn"
+  name: "res3.3.conv2/bn"
   type: "BatchNorm"
   bottom: "res3.3.conv2"
-  top: "res3.3.conv2_bn"
+  top: "res3.3.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -809,33 +698,30 @@ layer {
   }
 }
 layer {
-  name: "res3.3.conv2_relu"
+  name: "res3.3.conv2/relu"
   type: "ReLU"
-  bottom: "res3.3.conv2_bn"
-  top: "res3.3.conv2_bn"
+  bottom: "res3.3.conv2/bn"
+  top: "res3.3.conv2/bn"
 }
 layer {
   name: "res3.3.conv3"
   type: "Convolution"
-  bottom: "res3.3.conv2_bn"
+  bottom: "res3.3.conv2/bn"
   top: "res3.3.conv3"
   convolution_param {
     num_output: 512
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.3.conv3_bn"
+  name: "res3.3.conv3/bn"
   type: "BatchNorm"
   bottom: "res3.3.conv3"
-  top: "res3.3.conv3_bn"
+  top: "res3.3.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -843,11 +729,11 @@ layer {
   }
 }
 layer {
-  name: "res3.3.eltwise"
+  name: "res3.3.sum"
   type: "Eltwise"
-  bottom: "res3.3.conv3_bn"
-  bottom: "res3.2.eltwise"
-  top: "res3.3.eltwise"
+  bottom: "res3.3.conv3/bn"
+  bottom: "res3.2.sum"
+  top: "res3.3.sum"
   eltwise_param {
     operation: SUM
   }
@@ -855,31 +741,28 @@ layer {
 layer {
   name: "res3.3.relu"
   type: "ReLU"
-  bottom: "res3.3.eltwise"
-  top: "res3.3.eltwise"
+  bottom: "res3.3.sum"
+  top: "res3.3.sum"
 }
 layer {
   name: "res3.4.conv1"
   type: "Convolution"
-  bottom: "res3.3.eltwise"
+  bottom: "res3.3.sum"
   top: "res3.4.conv1"
   convolution_param {
     num_output: 128
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.4.conv1_bn"
+  name: "res3.4.conv1/bn"
   type: "BatchNorm"
   bottom: "res3.4.conv1"
-  top: "res3.4.conv1_bn"
+  top: "res3.4.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -887,33 +770,31 @@ layer {
   }
 }
 layer {
-  name: "res3.4.conv1_relu"
+  name: "res3.4.conv1/relu"
   type: "ReLU"
-  bottom: "res3.4.conv1_bn"
-  top: "res3.4.conv1_bn"
+  bottom: "res3.4.conv1/bn"
+  top: "res3.4.conv1/bn"
 }
 layer {
   name: "res3.4.conv2"
   type: "Convolution"
-  bottom: "res3.4.conv1_bn"
+  bottom: "res3.4.conv1/bn"
   top: "res3.4.conv2"
   convolution_param {
     num_output: 128
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.4.conv2_bn"
+  name: "res3.4.conv2/bn"
   type: "BatchNorm"
   bottom: "res3.4.conv2"
-  top: "res3.4.conv2_bn"
+  top: "res3.4.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -921,33 +802,30 @@ layer {
   }
 }
 layer {
-  name: "res3.4.conv2_relu"
+  name: "res3.4.conv2/relu"
   type: "ReLU"
-  bottom: "res3.4.conv2_bn"
-  top: "res3.4.conv2_bn"
+  bottom: "res3.4.conv2/bn"
+  top: "res3.4.conv2/bn"
 }
 layer {
   name: "res3.4.conv3"
   type: "Convolution"
-  bottom: "res3.4.conv2_bn"
+  bottom: "res3.4.conv2/bn"
   top: "res3.4.conv3"
   convolution_param {
     num_output: 512
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res3.4.conv3_bn"
+  name: "res3.4.conv3/bn"
   type: "BatchNorm"
   bottom: "res3.4.conv3"
-  top: "res3.4.conv3_bn"
+  top: "res3.4.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -955,11 +833,11 @@ layer {
   }
 }
 layer {
-  name: "res3.4.eltwise"
+  name: "res3.4.sum"
   type: "Eltwise"
-  bottom: "res3.4.conv3_bn"
-  bottom: "res3.3.eltwise"
-  top: "res3.4.eltwise"
+  bottom: "res3.4.conv3/bn"
+  bottom: "res3.3.sum"
+  top: "res3.4.sum"
   eltwise_param {
     operation: SUM
   }
@@ -967,34 +845,32 @@ layer {
 layer {
   name: "res3.4.relu"
   type: "ReLU"
-  bottom: "res3.4.eltwise"
-  top: "res3.4.eltwise"
+  bottom: "res3.4.sum"
+  top: "res3.4.sum"
 }
 #
-# ResBlock4
+# res4
 #
 layer {
   name: "res4.1.conv1"
   type: "Convolution"
-  bottom: "res3.4.eltwise"
+  bottom: "res3.4.sum"
   top: "res4.1.conv1"
   convolution_param {
     num_output: 256
     kernel_size: 1
     stride: 2
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.1.conv1_bn"
+  name: "res4.1.conv1/bn"
   type: "BatchNorm"
   bottom: "res4.1.conv1"
-  top: "res4.1.conv1_bn"
+  top: "res4.1.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1002,33 +878,31 @@ layer {
   }
 }
 layer {
-  name: "res4.1.conv1_relu"
+  name: "res4.1.conv1/relu"
   type: "ReLU"
-  bottom: "res4.1.conv1_bn"
-  top: "res4.1.conv1_bn"
+  bottom: "res4.1.conv1/bn"
+  top: "res4.1.conv1/bn"
 }
 layer {
   name: "res4.1.conv2"
   type: "Convolution"
-  bottom: "res4.1.conv1_bn"
+  bottom: "res4.1.conv1/bn"
   top: "res4.1.conv2"
   convolution_param {
     num_output: 256
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.1.conv2_bn"
+  name: "res4.1.conv2/bn"
   type: "BatchNorm"
   bottom: "res4.1.conv2"
-  top: "res4.1.conv2_bn"
+  top: "res4.1.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1036,33 +910,30 @@ layer {
   }
 }
 layer {
-  name: "res4.1.conv2_relu"
+  name: "res4.1.conv2/relu"
   type: "ReLU"
-  bottom: "res4.1.conv2_bn"
-  top: "res4.1.conv2_bn"
+  bottom: "res4.1.conv2/bn"
+  top: "res4.1.conv2/bn"
 }
 layer {
   name: "res4.1.conv3"
   type: "Convolution"
-  bottom: "res4.1.conv2_bn"
+  bottom: "res4.1.conv2/bn"
   top: "res4.1.conv3"
   convolution_param {
     num_output: 1024
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.1.conv3_bn"
+  name: "res4.1.conv3/bn"
   type: "BatchNorm"
   bottom: "res4.1.conv3"
-  top: "res4.1.conv3_bn"
+  top: "res4.1.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1072,25 +943,23 @@ layer {
 layer {
   name: "res4.1.skipConv"
   type: "Convolution"
-  bottom: "res3.4.eltwise"
+  bottom: "res3.4.sum"
   top: "res4.1.skipConv"
   convolution_param {
     num_output: 1024
     kernel_size: 1
     stride: 2
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.1.skipConv_bn"
+  name: "res4.1.skipConv/bn"
   type: "BatchNorm"
   bottom: "res4.1.skipConv"
-  top: "res4.1.skipConv_bn"
+  top: "res4.1.skipConv/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1098,11 +967,11 @@ layer {
   }
 }
 layer {
-  name: "res4.1.eltwise"
+  name: "res4.1.sum"
   type: "Eltwise"
-  bottom: "res4.1.conv3_bn"
-  bottom: "res4.1.skipConv_bn"
-  top: "res4.1.eltwise"
+  bottom: "res4.1.conv3/bn"
+  bottom: "res4.1.skipConv/bn"
+  top: "res4.1.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1110,31 +979,28 @@ layer {
 layer {
   name: "res4.1.relu"
   type: "ReLU"
-  bottom: "res4.1.eltwise"
-  top: "res4.1.eltwise"
+  bottom: "res4.1.sum"
+  top: "res4.1.sum"
 }
 layer {
   name: "res4.2.conv1"
   type: "Convolution"
-  bottom: "res4.1.eltwise"
+  bottom: "res4.1.sum"
   top: "res4.2.conv1"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.2.conv1_bn"
+  name: "res4.2.conv1/bn"
   type: "BatchNorm"
   bottom: "res4.2.conv1"
-  top: "res4.2.conv1_bn"
+  top: "res4.2.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1142,33 +1008,31 @@ layer {
   }
 }
 layer {
-  name: "res4.2.conv1_relu"
+  name: "res4.2.conv1/relu"
   type: "ReLU"
-  bottom: "res4.2.conv1_bn"
-  top: "res4.2.conv1_bn"
+  bottom: "res4.2.conv1/bn"
+  top: "res4.2.conv1/bn"
 }
 layer {
   name: "res4.2.conv2"
   type: "Convolution"
-  bottom: "res4.2.conv1_bn"
+  bottom: "res4.2.conv1/bn"
   top: "res4.2.conv2"
   convolution_param {
     num_output: 256
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.2.conv2_bn"
+  name: "res4.2.conv2/bn"
   type: "BatchNorm"
   bottom: "res4.2.conv2"
-  top: "res4.2.conv2_bn"
+  top: "res4.2.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1176,33 +1040,30 @@ layer {
   }
 }
 layer {
-  name: "res4.2.conv2_relu"
+  name: "res4.2.conv2/relu"
   type: "ReLU"
-  bottom: "res4.2.conv2_bn"
-  top: "res4.2.conv2_bn"
+  bottom: "res4.2.conv2/bn"
+  top: "res4.2.conv2/bn"
 }
 layer {
   name: "res4.2.conv3"
   type: "Convolution"
-  bottom: "res4.2.conv2_bn"
+  bottom: "res4.2.conv2/bn"
   top: "res4.2.conv3"
   convolution_param {
     num_output: 1024
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.2.conv3_bn"
+  name: "res4.2.conv3/bn"
   type: "BatchNorm"
   bottom: "res4.2.conv3"
-  top: "res4.2.conv3_bn"
+  top: "res4.2.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1210,11 +1071,11 @@ layer {
   }
 }
 layer {
-  name: "res4.2.eltwise"
+  name: "res4.2.sum"
   type: "Eltwise"
-  bottom: "res4.2.conv3_bn"
-  bottom: "res4.1.eltwise"
-  top: "res4.2.eltwise"
+  bottom: "res4.2.conv3/bn"
+  bottom: "res4.1.sum"
+  top: "res4.2.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1222,31 +1083,28 @@ layer {
 layer {
   name: "res4.2.relu"
   type: "ReLU"
-  bottom: "res4.2.eltwise"
-  top: "res4.2.eltwise"
+  bottom: "res4.2.sum"
+  top: "res4.2.sum"
 }
 layer {
   name: "res4.3.conv1"
   type: "Convolution"
-  bottom: "res4.2.eltwise"
+  bottom: "res4.2.sum"
   top: "res4.3.conv1"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.3.conv1_bn"
+  name: "res4.3.conv1/bn"
   type: "BatchNorm"
   bottom: "res4.3.conv1"
-  top: "res4.3.conv1_bn"
+  top: "res4.3.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1254,33 +1112,31 @@ layer {
   }
 }
 layer {
-  name: "res4.3.conv1_relu"
+  name: "res4.3.conv1/relu"
   type: "ReLU"
-  bottom: "res4.3.conv1_bn"
-  top: "res4.3.conv1_bn"
+  bottom: "res4.3.conv1/bn"
+  top: "res4.3.conv1/bn"
 }
 layer {
   name: "res4.3.conv2"
   type: "Convolution"
-  bottom: "res4.3.conv1_bn"
+  bottom: "res4.3.conv1/bn"
   top: "res4.3.conv2"
   convolution_param {
     num_output: 256
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.3.conv2_bn"
+  name: "res4.3.conv2/bn"
   type: "BatchNorm"
   bottom: "res4.3.conv2"
-  top: "res4.3.conv2_bn"
+  top: "res4.3.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1288,33 +1144,30 @@ layer {
   }
 }
 layer {
-  name: "res4.3.conv2_relu"
+  name: "res4.3.conv2/relu"
   type: "ReLU"
-  bottom: "res4.3.conv2_bn"
-  top: "res4.3.conv2_bn"
+  bottom: "res4.3.conv2/bn"
+  top: "res4.3.conv2/bn"
 }
 layer {
   name: "res4.3.conv3"
   type: "Convolution"
-  bottom: "res4.3.conv2_bn"
+  bottom: "res4.3.conv2/bn"
   top: "res4.3.conv3"
   convolution_param {
     num_output: 1024
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.3.conv3_bn"
+  name: "res4.3.conv3/bn"
   type: "BatchNorm"
   bottom: "res4.3.conv3"
-  top: "res4.3.conv3_bn"
+  top: "res4.3.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1322,11 +1175,11 @@ layer {
   }
 }
 layer {
-  name: "res4.3.eltwise"
+  name: "res4.3.sum"
   type: "Eltwise"
-  bottom: "res4.3.conv3_bn"
-  bottom: "res4.2.eltwise"
-  top: "res4.3.eltwise"
+  bottom: "res4.3.conv3/bn"
+  bottom: "res4.2.sum"
+  top: "res4.3.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1334,31 +1187,28 @@ layer {
 layer {
   name: "res4.3.relu"
   type: "ReLU"
-  bottom: "res4.3.eltwise"
-  top: "res4.3.eltwise"
+  bottom: "res4.3.sum"
+  top: "res4.3.sum"
 }
 layer {
   name: "res4.4.conv1"
   type: "Convolution"
-  bottom: "res4.3.eltwise"
+  bottom: "res4.3.sum"
   top: "res4.4.conv1"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.4.conv1_bn"
+  name: "res4.4.conv1/bn"
   type: "BatchNorm"
   bottom: "res4.4.conv1"
-  top: "res4.4.conv1_bn"
+  top: "res4.4.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1366,33 +1216,31 @@ layer {
   }
 }
 layer {
-  name: "res4.4.conv1_relu"
+  name: "res4.4.conv1/relu"
   type: "ReLU"
-  bottom: "res4.4.conv1_bn"
-  top: "res4.4.conv1_bn"
+  bottom: "res4.4.conv1/bn"
+  top: "res4.4.conv1/bn"
 }
 layer {
   name: "res4.4.conv2"
   type: "Convolution"
-  bottom: "res4.4.conv1_bn"
+  bottom: "res4.4.conv1/bn"
   top: "res4.4.conv2"
   convolution_param {
     num_output: 256
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.4.conv2_bn"
+  name: "res4.4.conv2/bn"
   type: "BatchNorm"
   bottom: "res4.4.conv2"
-  top: "res4.4.conv2_bn"
+  top: "res4.4.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1400,33 +1248,30 @@ layer {
   }
 }
 layer {
-  name: "res4.4.conv2_relu"
+  name: "res4.4.conv2/relu"
   type: "ReLU"
-  bottom: "res4.4.conv2_bn"
-  top: "res4.4.conv2_bn"
+  bottom: "res4.4.conv2/bn"
+  top: "res4.4.conv2/bn"
 }
 layer {
   name: "res4.4.conv3"
   type: "Convolution"
-  bottom: "res4.4.conv2_bn"
+  bottom: "res4.4.conv2/bn"
   top: "res4.4.conv3"
   convolution_param {
     num_output: 1024
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.4.conv3_bn"
+  name: "res4.4.conv3/bn"
   type: "BatchNorm"
   bottom: "res4.4.conv3"
-  top: "res4.4.conv3_bn"
+  top: "res4.4.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1434,11 +1279,11 @@ layer {
   }
 }
 layer {
-  name: "res4.4.eltwise"
+  name: "res4.4.sum"
   type: "Eltwise"
-  bottom: "res4.4.conv3_bn"
-  bottom: "res4.3.eltwise"
-  top: "res4.4.eltwise"
+  bottom: "res4.4.conv3/bn"
+  bottom: "res4.3.sum"
+  top: "res4.4.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1446,31 +1291,28 @@ layer {
 layer {
   name: "res4.4.relu"
   type: "ReLU"
-  bottom: "res4.4.eltwise"
-  top: "res4.4.eltwise"
+  bottom: "res4.4.sum"
+  top: "res4.4.sum"
 }
 layer {
   name: "res4.5.conv1"
   type: "Convolution"
-  bottom: "res4.4.eltwise"
+  bottom: "res4.4.sum"
   top: "res4.5.conv1"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.5.conv1_bn"
+  name: "res4.5.conv1/bn"
   type: "BatchNorm"
   bottom: "res4.5.conv1"
-  top: "res4.5.conv1_bn"
+  top: "res4.5.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1478,33 +1320,31 @@ layer {
   }
 }
 layer {
-  name: "res4.5.conv1_relu"
+  name: "res4.5.conv1/relu"
   type: "ReLU"
-  bottom: "res4.5.conv1_bn"
-  top: "res4.5.conv1_bn"
+  bottom: "res4.5.conv1/bn"
+  top: "res4.5.conv1/bn"
 }
 layer {
   name: "res4.5.conv2"
   type: "Convolution"
-  bottom: "res4.5.conv1_bn"
+  bottom: "res4.5.conv1/bn"
   top: "res4.5.conv2"
   convolution_param {
     num_output: 256
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.5.conv2_bn"
+  name: "res4.5.conv2/bn"
   type: "BatchNorm"
   bottom: "res4.5.conv2"
-  top: "res4.5.conv2_bn"
+  top: "res4.5.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1512,33 +1352,30 @@ layer {
   }
 }
 layer {
-  name: "res4.5.conv2_relu"
+  name: "res4.5.conv2/relu"
   type: "ReLU"
-  bottom: "res4.5.conv2_bn"
-  top: "res4.5.conv2_bn"
+  bottom: "res4.5.conv2/bn"
+  top: "res4.5.conv2/bn"
 }
 layer {
   name: "res4.5.conv3"
   type: "Convolution"
-  bottom: "res4.5.conv2_bn"
+  bottom: "res4.5.conv2/bn"
   top: "res4.5.conv3"
   convolution_param {
     num_output: 1024
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.5.conv3_bn"
+  name: "res4.5.conv3/bn"
   type: "BatchNorm"
   bottom: "res4.5.conv3"
-  top: "res4.5.conv3_bn"
+  top: "res4.5.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1546,11 +1383,11 @@ layer {
   }
 }
 layer {
-  name: "res4.5.eltwise"
+  name: "res4.5.sum"
   type: "Eltwise"
-  bottom: "res4.5.conv3_bn"
-  bottom: "res4.4.eltwise"
-  top: "res4.5.eltwise"
+  bottom: "res4.5.conv3/bn"
+  bottom: "res4.4.sum"
+  top: "res4.5.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1558,31 +1395,28 @@ layer {
 layer {
   name: "res4.5.relu"
   type: "ReLU"
-  bottom: "res4.5.eltwise"
-  top: "res4.5.eltwise"
+  bottom: "res4.5.sum"
+  top: "res4.5.sum"
 }
 layer {
   name: "res4.6.conv1"
   type: "Convolution"
-  bottom: "res4.5.eltwise"
+  bottom: "res4.5.sum"
   top: "res4.6.conv1"
   convolution_param {
     num_output: 256
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.6.conv1_bn"
+  name: "res4.6.conv1/bn"
   type: "BatchNorm"
   bottom: "res4.6.conv1"
-  top: "res4.6.conv1_bn"
+  top: "res4.6.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1590,33 +1424,31 @@ layer {
   }
 }
 layer {
-  name: "res4.6.conv1_relu"
+  name: "res4.6.conv1/relu"
   type: "ReLU"
-  bottom: "res4.6.conv1_bn"
-  top: "res4.6.conv1_bn"
+  bottom: "res4.6.conv1/bn"
+  top: "res4.6.conv1/bn"
 }
 layer {
   name: "res4.6.conv2"
   type: "Convolution"
-  bottom: "res4.6.conv1_bn"
+  bottom: "res4.6.conv1/bn"
   top: "res4.6.conv2"
   convolution_param {
     num_output: 256
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.6.conv2_bn"
+  name: "res4.6.conv2/bn"
   type: "BatchNorm"
   bottom: "res4.6.conv2"
-  top: "res4.6.conv2_bn"
+  top: "res4.6.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1624,33 +1456,30 @@ layer {
   }
 }
 layer {
-  name: "res4.6.conv2_relu"
+  name: "res4.6.conv2/relu"
   type: "ReLU"
-  bottom: "res4.6.conv2_bn"
-  top: "res4.6.conv2_bn"
+  bottom: "res4.6.conv2/bn"
+  top: "res4.6.conv2/bn"
 }
 layer {
   name: "res4.6.conv3"
   type: "Convolution"
-  bottom: "res4.6.conv2_bn"
+  bottom: "res4.6.conv2/bn"
   top: "res4.6.conv3"
   convolution_param {
     num_output: 1024
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res4.6.conv3_bn"
+  name: "res4.6.conv3/bn"
   type: "BatchNorm"
   bottom: "res4.6.conv3"
-  top: "res4.6.conv3_bn"
+  top: "res4.6.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1658,11 +1487,11 @@ layer {
   }
 }
 layer {
-  name: "res4.6.eltwise"
+  name: "res4.6.sum"
   type: "Eltwise"
-  bottom: "res4.6.conv3_bn"
-  bottom: "res4.5.eltwise"
-  top: "res4.6.eltwise"
+  bottom: "res4.6.conv3/bn"
+  bottom: "res4.5.sum"
+  top: "res4.6.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1670,34 +1499,32 @@ layer {
 layer {
   name: "res4.6.relu"
   type: "ReLU"
-  bottom: "res4.6.eltwise"
-  top: "res4.6.eltwise"
+  bottom: "res4.6.sum"
+  top: "res4.6.sum"
 }
 #
-# ResBlock5
+# res5
 #
 layer {
   name: "res5.1.conv1"
   type: "Convolution"
-  bottom: "res4.6.eltwise"
+  bottom: "res4.6.sum"
   top: "res5.1.conv1"
   convolution_param {
     num_output: 512
     kernel_size: 1
     stride: 2
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.1.conv1_bn"
+  name: "res5.1.conv1/bn"
   type: "BatchNorm"
   bottom: "res5.1.conv1"
-  top: "res5.1.conv1_bn"
+  top: "res5.1.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1705,33 +1532,31 @@ layer {
   }
 }
 layer {
-  name: "res5.1.conv1_relu"
+  name: "res5.1.conv1/relu"
   type: "ReLU"
-  bottom: "res5.1.conv1_bn"
-  top: "res5.1.conv1_bn"
+  bottom: "res5.1.conv1/bn"
+  top: "res5.1.conv1/bn"
 }
 layer {
   name: "res5.1.conv2"
   type: "Convolution"
-  bottom: "res5.1.conv1_bn"
+  bottom: "res5.1.conv1/bn"
   top: "res5.1.conv2"
   convolution_param {
     num_output: 512
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.1.conv2_bn"
+  name: "res5.1.conv2/bn"
   type: "BatchNorm"
   bottom: "res5.1.conv2"
-  top: "res5.1.conv2_bn"
+  top: "res5.1.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1739,33 +1564,30 @@ layer {
   }
 }
 layer {
-  name: "res5.1.conv2_relu"
+  name: "res5.1.conv2/relu"
   type: "ReLU"
-  bottom: "res5.1.conv2_bn"
-  top: "res5.1.conv2_bn"
+  bottom: "res5.1.conv2/bn"
+  top: "res5.1.conv2/bn"
 }
 layer {
   name: "res5.1.conv3"
   type: "Convolution"
-  bottom: "res5.1.conv2_bn"
+  bottom: "res5.1.conv2/bn"
   top: "res5.1.conv3"
   convolution_param {
     num_output: 2048
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.1.conv3_bn"
+  name: "res5.1.conv3/bn"
   type: "BatchNorm"
   bottom: "res5.1.conv3"
-  top: "res5.1.conv3_bn"
+  top: "res5.1.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1775,25 +1597,23 @@ layer {
 layer {
   name: "res5.1.skipConv"
   type: "Convolution"
-  bottom: "res4.6.eltwise"
+  bottom: "res4.6.sum"
   top: "res5.1.skipConv"
   convolution_param {
     num_output: 2048
     kernel_size: 1
     stride: 2
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.1.skipConv_bn"
+  name: "res5.1.skipConv/bn"
   type: "BatchNorm"
   bottom: "res5.1.skipConv"
-  top: "res5.1.skipConv_bn"
+  top: "res5.1.skipConv/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1801,11 +1621,11 @@ layer {
   }
 }
 layer {
-  name: "res5.1.eltwise"
+  name: "res5.1.sum"
   type: "Eltwise"
-  bottom: "res5.1.conv3_bn"
-  bottom: "res5.1.skipConv_bn"
-  top: "res5.1.eltwise"
+  bottom: "res5.1.conv3/bn"
+  bottom: "res5.1.skipConv/bn"
+  top: "res5.1.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1813,31 +1633,28 @@ layer {
 layer {
   name: "res5.1.relu"
   type: "ReLU"
-  bottom: "res5.1.eltwise"
-  top: "res5.1.eltwise"
+  bottom: "res5.1.sum"
+  top: "res5.1.sum"
 }
 layer {
   name: "res5.2.conv1"
   type: "Convolution"
-  bottom: "res5.1.eltwise"
+  bottom: "res5.1.sum"
   top: "res5.2.conv1"
   convolution_param {
     num_output: 512
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.2.conv1_bn"
+  name: "res5.2.conv1/bn"
   type: "BatchNorm"
   bottom: "res5.2.conv1"
-  top: "res5.2.conv1_bn"
+  top: "res5.2.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1845,33 +1662,31 @@ layer {
   }
 }
 layer {
-  name: "res5.2.conv1_relu"
+  name: "res5.2.conv1/relu"
   type: "ReLU"
-  bottom: "res5.2.conv1_bn"
-  top: "res5.2.conv1_bn"
+  bottom: "res5.2.conv1/bn"
+  top: "res5.2.conv1/bn"
 }
 layer {
   name: "res5.2.conv2"
   type: "Convolution"
-  bottom: "res5.2.conv1_bn"
+  bottom: "res5.2.conv1/bn"
   top: "res5.2.conv2"
   convolution_param {
     num_output: 512
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.2.conv2_bn"
+  name: "res5.2.conv2/bn"
   type: "BatchNorm"
   bottom: "res5.2.conv2"
-  top: "res5.2.conv2_bn"
+  top: "res5.2.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1879,33 +1694,30 @@ layer {
   }
 }
 layer {
-  name: "res5.2.conv2_relu"
+  name: "res5.2.conv2/relu"
   type: "ReLU"
-  bottom: "res5.2.conv2_bn"
-  top: "res5.2.conv2_bn"
+  bottom: "res5.2.conv2/bn"
+  top: "res5.2.conv2/bn"
 }
 layer {
   name: "res5.2.conv3"
   type: "Convolution"
-  bottom: "res5.2.conv2_bn"
+  bottom: "res5.2.conv2/bn"
   top: "res5.2.conv3"
   convolution_param {
     num_output: 2048
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.2.conv3_bn"
+  name: "res5.2.conv3/bn"
   type: "BatchNorm"
   bottom: "res5.2.conv3"
-  top: "res5.2.conv3_bn"
+  top: "res5.2.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1913,11 +1725,11 @@ layer {
   }
 }
 layer {
-  name: "res5.2.eltwise"
+  name: "res5.2.sum"
   type: "Eltwise"
-  bottom: "res5.2.conv3_bn"
-  bottom: "res5.1.eltwise"
-  top: "res5.2.eltwise"
+  bottom: "res5.2.conv3/bn"
+  bottom: "res5.1.sum"
+  top: "res5.2.sum"
   eltwise_param {
     operation: SUM
   }
@@ -1925,31 +1737,28 @@ layer {
 layer {
   name: "res5.2.relu"
   type: "ReLU"
-  bottom: "res5.2.eltwise"
-  top: "res5.2.eltwise"
+  bottom: "res5.2.sum"
+  top: "res5.2.sum"
 }
 layer {
   name: "res5.3.conv1"
   type: "Convolution"
-  bottom: "res5.2.eltwise"
+  bottom: "res5.2.sum"
   top: "res5.3.conv1"
   convolution_param {
     num_output: 512
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.3.conv1_bn"
+  name: "res5.3.conv1/bn"
   type: "BatchNorm"
   bottom: "res5.3.conv1"
-  top: "res5.3.conv1_bn"
+  top: "res5.3.conv1/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1957,33 +1766,31 @@ layer {
   }
 }
 layer {
-  name: "res5.3.conv1_relu"
+  name: "res5.3.conv1/relu"
   type: "ReLU"
-  bottom: "res5.3.conv1_bn"
-  top: "res5.3.conv1_bn"
+  bottom: "res5.3.conv1/bn"
+  top: "res5.3.conv1/bn"
 }
 layer {
   name: "res5.3.conv2"
   type: "Convolution"
-  bottom: "res5.3.conv1_bn"
+  bottom: "res5.3.conv1/bn"
   top: "res5.3.conv2"
   convolution_param {
     num_output: 512
     kernel_size: 3
-    stride: 1
     pad: 1
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.3.conv2_bn"
+  name: "res5.3.conv2/bn"
   type: "BatchNorm"
   bottom: "res5.3.conv2"
-  top: "res5.3.conv2_bn"
+  top: "res5.3.conv2/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -1991,33 +1798,30 @@ layer {
   }
 }
 layer {
-  name: "res5.3.conv2_relu"
+  name: "res5.3.conv2/relu"
   type: "ReLU"
-  bottom: "res5.3.conv2_bn"
-  top: "res5.3.conv2_bn"
+  bottom: "res5.3.conv2/bn"
+  top: "res5.3.conv2/bn"
 }
 layer {
   name: "res5.3.conv3"
   type: "Convolution"
-  bottom: "res5.3.conv2_bn"
+  bottom: "res5.3.conv2/bn"
   top: "res5.3.conv3"
   convolution_param {
     num_output: 2048
     kernel_size: 1
-    stride: 1
-    pad: 0
     weight_filler {
       type: "msra"
-      std: 0.010
     }
     bias_term: false
   }
 }
 layer {
-  name: "res5.3.conv3_bn"
+  name: "res5.3.conv3/bn"
   type: "BatchNorm"
   bottom: "res5.3.conv3"
-  top: "res5.3.conv3_bn"
+  top: "res5.3.conv3/bn"
   batch_norm_param {
     moving_average_fraction: 0.9
     eps: 0.0001
@@ -2025,11 +1829,11 @@ layer {
   }
 }
 layer {
-  name: "res5.3.eltwise"
+  name: "res5.3.sum"
   type: "Eltwise"
-  bottom: "res5.3.conv3_bn"
-  bottom: "res5.2.eltwise"
-  top: "res5.3.eltwise"
+  bottom: "res5.3.conv3/bn"
+  bottom: "res5.2.sum"
+  top: "res5.3.sum"
   eltwise_param {
     operation: SUM
   }
@@ -2037,18 +1841,17 @@ layer {
 layer {
   name: "res5.3.relu"
   type: "ReLU"
-  bottom: "res5.3.eltwise"
-  top: "res5.3.eltwise"
+  bottom: "res5.3.sum"
+  top: "res5.3.sum"
 }
 layer {
   name: "pool2"
   type: "Pooling"
-  bottom: "res5.3.eltwise"
+  bottom: "res5.3.sum"
   top: "pool2"
   pooling_param {
     pool: AVE
     kernel_size: 7
-    stride: 1
   }
 }
 layer {
@@ -2060,7 +1863,6 @@ layer {
     num_output: 1000
     weight_filler {
       type: "msra"
-      std: 0.01
     }
     bias_filler {
       type: "constant"
@@ -2074,4 +1876,23 @@ layer {
   bottom: "fc"
   bottom: "label"
   top: "loss"
+ }
+
+layer {
+  name: "accuracy/top-1"
+  type: "Accuracy"
+  bottom: "fc"
+  bottom: "label"
+  top: "accuracy/top-1"
+  accuracy_param { top_k: 1 }
+#  include { phase: TEST }
+}
+layer {
+  name: "accuracy/top-5"
+  type: "Accuracy"
+  bottom: "fc"
+  bottom: "label"
+  top: "accuracy/top-5"
+  accuracy_param { top_k: 5 }
+#  include { phase: TEST }
 }

@@ -40,14 +40,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu1_1"
@@ -71,14 +63,6 @@ layer {
       type: "constant"
       value: 0.1
     }
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
   }
 }
 layer {
@@ -115,14 +99,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu2_1"
@@ -146,14 +122,6 @@ layer {
       type: "constant"
       value: 0.1
     }
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
   }
 }
 layer {
@@ -190,14 +158,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu3_1"
@@ -222,14 +182,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu3_2"
@@ -253,14 +205,6 @@ layer {
       type: "constant"
       value: 0.1
     }
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
   }
 }
 layer {
@@ -297,14 +241,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu4_1"
@@ -329,14 +265,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu4_2"
@@ -360,14 +288,6 @@ layer {
       type: "constant"
       value: 0.1
     }
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
   }
 }
 layer {
@@ -404,14 +324,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu5_1"
@@ -436,14 +348,6 @@ layer {
       value: 0.1
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu5_2"
@@ -467,14 +371,6 @@ layer {
       type: "constant"
       value: 0.1
     }
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
   }
 }
 layer {
@@ -510,14 +406,6 @@ layer {
       value: 0
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "relu6"
@@ -549,14 +437,6 @@ layer {
       type: "constant"
       value: 0
     }
-  }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
   }
 }
 layer {
@@ -590,14 +470,6 @@ layer {
       value: 0
     }
   }
-  param {
-    lr_mult: 1
-    decay_mult: 1
-  }
-  param {
-    lr_mult: 2
-    decay_mult: 0
-  }
 }
 layer {
   name: "loss"
@@ -605,4 +477,22 @@ layer {
   bottom: "fc8"
   bottom: "label"
   top: "loss"
+}
+layer {
+  name: "accuracy/top-1"
+  type: "Accuracy"
+  #include: { phase: TEST }
+  bottom: "fc8"
+  bottom: "label"
+  top: "accuracy/top-1"
+  accuracy_param { top_k: 1 }
+}
+layer {
+  name: "accuracy/top-5"
+  type: "Accuracy"
+  #include: { phase: TEST }
+  bottom: "fc8"
+  bottom: "label"
+  top: "accuracy/top-5"
+  accuracy_param { top_k: 5 }
 }

@@ -23,13 +23,6 @@ layer {
     data_filler: { type: 'constant' value: 0.001 }
   }
 }
-name: "ResNet-101"
-input: "data"
-input_dim: 1
-input_dim: 3
-input_dim: 224
-input_dim: 224
-
 layer {
 	bottom: "data"
 	top: "conv1"
@@ -4574,7 +4567,7 @@ layer {
 layer {
   name: "loss"
   type: "SoftmaxWithLoss"
-  bottom: "fc"
+  bottom: "fc1000"
   bottom: "label"
   top: "loss"
 }
