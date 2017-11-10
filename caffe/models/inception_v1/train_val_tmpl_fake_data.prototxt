@@ -7,7 +7,7 @@ layer {
     phase: TRAIN
   }
   dummy_data_param {
-    shape: { dim: REPLACEBATCHSIZE dim: 3 dim: 224 dim: 224}
+    shape: { dim: REPLACEBATCHSIZE dim: 3 dim: 299 dim: 299}
     data_filler: { type: 'constant' value: 0.001 }
   }
 }
