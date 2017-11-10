@@ -4558,13 +4558,6 @@ layer {
 }
 
 layer {
-	bottom: "fc1000"
-	top: "prob"
-	name: "prob"
-	type: "Softmax"
-}
-
-layer {
   name: "loss"
   type: "SoftmaxWithLoss"
   bottom: "fc1000"
