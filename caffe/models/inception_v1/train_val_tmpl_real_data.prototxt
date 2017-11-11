@@ -1,41 +1,52 @@
-name: "Inception-v1"
+name: "GoogleNet"
 layer {
   name: "data"
   type: "Data"
   top: "data"
   top: "label"
-  include {
-    phase: TRAIN
-  }
-  transform_param {
-    mirror: true
-    crop_size: 299
-    mean_file: "REPLACEIMAGENETMEAN"
-  }
+#  data_param {
+#    source: "/imagenet/lmdb/ilsvrc12_train_lmdb"
+#    batch_size: 64
+#    batch_size: 256   # DGX1
+#    backend: LMDB
+#  }
   data_param {
     source: "REPLACEIMAGENETTRAIN"
     batch_size: REPLACEBATCHSIZE
     backend: LMDB
   }
+  transform_param {
+    var_sz_img_enabled: true
+    img_rand_resize_lower: 256
+    img_rand_resize_upper: 310
+    crop_size: 299
+    mirror: true
+    scale: 0.00390625
+    mean_file: "REPLACEIMAGENETMEAN"
+  }
+  include { phase: TRAIN }
 }
 layer {
   name: "data"
   type: "Data"
   top: "data"
   top: "label"
-  include {
-    phase: TEST
-  }
   transform_param {
     mirror: false
     crop_size: 299
     mean_file: "REPLACEIMAGENETMEAN"
   }
+#  data_param {
+#    source: "/imagenet/lmdb/ilsvrc12_val_lmdb"
+#    batch_size: 32
+#    backend: LMDB
+#  }
   data_param {
     source: "REPLACEIMAGENETVAL"
-    batch_size: 5
+    batch_size: REPLACEBATCHSIZE
     backend: LMDB
   }
+  include { phase: TEST }
 }
 layer {
   name: "conv1/7x7_s2"
@@ -1883,7 +1894,7 @@ layer {
 layer {
   name: "accuracy/top-1"
   type: "Accuracy"
-  #include { phase: TEST }
+  include { phase: TEST }
   bottom: "loss3/classifier"
   bottom: "label"
   top: "accuracy/top-1"
@@ -1892,7 +1903,7 @@ layer {
 layer {
   name: "accuracy/top-5"
   type: "Accuracy"
-  #include { phase: TEST  }
+  include { phase: TEST  }
   bottom: "loss3/classifier"
   bottom: "label"
   top: "accuracy/top-5"

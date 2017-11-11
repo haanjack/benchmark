@@ -4,43 +4,47 @@ layer {
   type: "Data"
   top: "data"
   top: "label"
-  include {
-    phase: TRAIN
+  data_param {
+    source: "REPLACEIMAGENETTRAIN
+    backend: LMDB
+    batch_size: REPLACEBATCHSIZE
+    cache:   true
+    shuffle: true  
   }
   transform_param {
-    mirror: true
-    crop_size: 224
+    var_sz_img_enabled: true
+    img_rand_resize_lower: 256
+    img_rand_resize_upper: 288
     mean_value: 104
     mean_value: 117
     mean_value: 123
+    crop_size: 224
+    mirror: true
+    scale: 0.00390625
   }
-  data_param {
-    source: "REPLACEIMAGENETTRAIN"
-    batch_size: REPLACEBATCHSIZE
-    backend: LMDB
-  }
+  include: { phase: TRAIN }
 }
 layer {
   name: "data"
   type: "Data"
   top: "data"
   top: "label"
-  include {
-    phase: TEST
+  data_param {
+    source: "REPLACEIMAGENETVAL"
+    backend: LMDB
+    batch_size: 32
   }
   transform_param {
-    mirror: false
-    crop_size: 224
     mean_value: 104
     mean_value: 117
     mean_value: 123
+    crop_size: 224
+    mirror: false
+    scale: 0.00390625
   }
-  data_param {
-    source: "REPLACEIMAGENETVAL"
-    batch_size: 4
-    backend: LMDB
-  }
+  include: { phase: TEST }
 }
+
 layer {
 	bottom: "data"
 	top: "conv1"
