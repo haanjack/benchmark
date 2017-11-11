@@ -4,12 +4,6 @@ layer {
   type: "Data"
   top: "data"
   top: "label"
-#  data_param {
-#    source: "/imagenet/lmdb/ilsvrc12_train_lmdb"
-#    batch_size: 64
-#    batch_size: 256   # DGX1
-#    backend: LMDB
-#  }
   data_param {
     source: "REPLACEIMAGENETTRAIN"
     batch_size: REPLACEBATCHSIZE
@@ -36,11 +30,6 @@ layer {
     crop_size: 299
     mean_file: "REPLACEIMAGENETMEAN"
   }
-#  data_param {
-#    source: "/imagenet/lmdb/ilsvrc12_val_lmdb"
-#    batch_size: 32
-#    backend: LMDB
-#  }
   data_param {
     source: "REPLACEIMAGENETVAL"
     batch_size: REPLACEBATCHSIZE

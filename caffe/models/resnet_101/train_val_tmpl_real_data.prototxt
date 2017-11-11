@@ -5,11 +5,11 @@ layer {
   top: "data"
   top: "label"
   data_param {
-    source: "REPLACEIMAGENETTRAIN
+    source: "REPLACEIMAGENETTRAIN"
     backend: LMDB
     batch_size: REPLACEBATCHSIZE
     cache:   true
-    shuffle: true  
+    shuffle: true
   }
   transform_param {
     var_sz_img_enabled: true
