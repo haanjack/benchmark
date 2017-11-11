@@ -13,7 +13,8 @@ COMMAND="$2"
 nvidia-docker run --rm -ti --name tensorflow \
     -u $(id -u):$(id -g) \
     --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 \
-    -v ${DATASET_DIR}:/data \
-    tf-bench ${COMMAND}
+    -v $(pwd):/workspace \
+    -v ${DATASET_DIR}:/imagenet \
+    nvcr.io/nvidia/tensorflow:17.10 
 
 

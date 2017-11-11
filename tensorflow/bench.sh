@@ -1,8 +1,21 @@
-python -m\
-tf_cnn_benchmarks.tf_cnn_benchmarks --local_parameter_device=gpu --num_gpus=1 \
---batch_size=64 --model=resnet50 --variable_update=replicated \
---data_dir=/data --data_name=imagenet \
---num_epochs=1 \
---task_index=0 \
---ps_host=127.0.0.1:50000 \
---worker_hosts=127.0.0.1:50000
+#!/bin/bash
+
+LOG_DIR=./output
+DATA_DIR=/imagenet
+NUM_EPOCHS=1
+
+mkdir -p ${LOG_DIR}
+
+MODEL=googlenet
+BATCH_SIZE=64
+TIMESTAMP=$(date +%m%d%H%M)
+LOG_FILE="${LOG_DIR}/output_${MODEL}_e${NUM_EPOCHS}_b${BATCH_SIZE}.tfevent.${TIMESTAMP}.log"
+python nvcnn.py --model=${MODEL} --batch_size=${BATCH_SIZE} --num_epochs=${NUM_EPOCHS} \
+  --data_dir=${DATA_DIR} --num_gpus=8 2>&1 | tee ${LOG_FILE}
+
+MODEL=resnet101
+BATCH_SIZE=32
+TIMESTAMP=$(date +%m%d%H%M)
+LOG_FILE="${LOG_DIR}/output_${MODEL}_e${NUM_EPOCHS}_b${BATCH_SIZE}.tfevent.${TIMESTAMP}.log"
+python nvcnn.py --model=${MODEL} --batch_size=${BATCH_SIZE} --num_epochs=${NUM_EPOCHS} \
+  --data_dir=${DATA_DIR} --num_gpus=8 2>&1 | tee ${LOG_FILE}
