@@ -12,8 +12,8 @@ layer {
   transform_param {
     var_sz_img_enabled: true
     img_rand_resize_lower: 256
-    img_rand_resize_upper: 310
-    crop_size: 299
+    img_rand_resize_upper: 288
+    crop_size: 224
     mirror: true
     scale: 0.00390625
     mean_file: "REPLACEIMAGENETMEAN"
@@ -27,7 +27,7 @@ layer {
   top: "label"
   transform_param {
     mirror: false
-    crop_size: 299
+    crop_size: 224
     mean_file: "REPLACEIMAGENETMEAN"
   }
   data_param {
