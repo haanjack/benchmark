@@ -26,7 +26,6 @@ case "$NGPUS" in
 esac
 
 MAXITER=$((${SAMPLE_SIZE} * ${EPOCHS} / ${BATCHSIZE} / ${NGPUS}))
-MAXITER=1000
 
 MODEL_DIR="./models/${MODEL}"
 
