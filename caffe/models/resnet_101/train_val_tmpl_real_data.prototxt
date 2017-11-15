@@ -8,19 +8,15 @@ layer {
     source: "REPLACEIMAGENETTRAIN"
     backend: LMDB
     batch_size: REPLACEBATCHSIZE
-    cache:   true
-    shuffle: true
   }
   transform_param {
-    var_sz_img_enabled: true
-    img_rand_resize_lower: 256
-    img_rand_resize_upper: 288
     mean_value: 104
     mean_value: 117
     mean_value: 123
     crop_size: 224
     mirror: true
     scale: 0.00390625
+#    mean_file: "REPLACEIMAGENETMEAN"
   }
   include: { phase: TRAIN }
 }
@@ -41,6 +37,7 @@ layer {
     crop_size: 224
     mirror: false
     scale: 0.00390625
+#    mean_file: "REPLACEIMAGENETMEAN"
   }
   include: { phase: TEST }
 }

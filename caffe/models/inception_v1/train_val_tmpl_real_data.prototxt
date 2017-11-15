@@ -10,13 +10,13 @@ layer {
     backend: LMDB
   }
   transform_param {
-    var_sz_img_enabled: true
-    img_rand_resize_lower: 256
-    img_rand_resize_upper: 288
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
     crop_size: 224
     mirror: true
     scale: 0.00390625
-    mean_file: "REPLACEIMAGENETMEAN"
+#    mean_file: "REPLACEIMAGENETMEAN"
   }
   include { phase: TRAIN }
 }
@@ -26,9 +26,12 @@ layer {
   top: "data"
   top: "label"
   transform_param {
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
     mirror: false
     crop_size: 224
-    mean_file: "REPLACEIMAGENETMEAN"
+#    mean_file: "REPLACEIMAGENETMEAN"
   }
   data_param {
     source: "REPLACEIMAGENETVAL"
