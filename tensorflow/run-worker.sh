@@ -21,7 +21,7 @@ nvidia-docker run --rm -ti --name tensorflow-${JOB_NAME}-${TASK_INDEX} \
     -p ${PORT}:${PORT} \
     -v ${DATASET_DIR}:/imagenet \
     -v ${BENCHMARK_SCRIPT_DIR}:/workspace \
-    nvcr.io/nvidia/tensorflow:$VERSION #bash bench.sh ${JOB_NAME} ${TASK_INDEX}
+    nvcr.io/nvidia/tensorflow:$VERSION bash bench.sh ${JOB_NAME} ${TASK_INDEX}
 
 
 
