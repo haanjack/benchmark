@@ -5,11 +5,15 @@ LOG_DIR=output
 TIMESTAMP=$(date +%m%d%H%M)
 NUM_EPOCHS=100
 NUM_GPU=8
-VARIABLE_UPDATE=distributed_replicated
 JOB_NAME=$1
 TASK_INDEX=$2
 
 mkdir -p ${LOG_DIR}
+
+LS_HOST=(192.168.200.212, 192.168.200.214)
+PORT_PS=50000
+PORT_WORKER=50001
+VARIABLE_UPDATE=distributed_replicated
 
 train() {
     MODEL=$1
@@ -20,8 +24,8 @@ train() {
     LOG_FILE="${LOG_DIR}/output_${MODEL}_e${NUM_EPOCHS}_b${BATCH_SIZE}.${TIMESTAMP}.log"
     python tf_cnn_benchmarks/tf_cnn_benchmarks.py \
         --job_name=${JOB_NAME} \
-        --ps_hosts="192.168.200.212:50000,192.168.200.214:50000" \
-        --worker_hosts="192.168.200.212:50001,192.168.200.214:50001" \
+        --ps_hosts="${LS_HOST[0]}:${PORT_PS},${LS_HOST[1]}:${PORT_PS}" \
+        --worker_hosts="${LS_HOST[0]}:${PORT_WORKER},${LS_HOST[1]}:${PORT_WORKER}" \
         --task_index=${TASK_INDEX} \
         --local_parameter_device=gpu \
         --model=${MODEL} --batch_size=${BATCH_SIZE} --num_baches=${NUM_EPOCHS} --num_gpus=${NUM_GPU} \
@@ -30,8 +34,6 @@ train() {
 	
 }
 
-#train googlenet 64 ${JOB_NAME} ${TASK_INDEX}
-train googlenet 64 worker ${TASK_INDEX}
-train googlenet 64 ps ${TASK_INDEX}
+train googlenet 64 ${JOB_NAME} ${TASK_INDEX}
 #train resnet101 32
 
