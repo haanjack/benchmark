@@ -20,15 +20,18 @@ train() {
     LOG_FILE="${LOG_DIR}/output_${MODEL}_e${NUM_EPOCHS}_b${BATCH_SIZE}.${TIMESTAMP}.log"
     python tf_cnn_benchmarks/tf_cnn_benchmarks.py \
         --job_name=${JOB_NAME} \
-        --ps_hosts="192.168.200.212:2222" \
-        --worker_hosts="192.168.200.212:2222" \
+        --ps_hosts="192.168.200.212:50000,192.168.200.214:50000" \
+        --worker_hosts="192.168.200.212:50001,192.168.200.214:50001" \
         --task_index=${TASK_INDEX} \
+        --local_parameter_device=gpu \
         --model=${MODEL} --batch_size=${BATCH_SIZE} --num_baches=${NUM_EPOCHS} --num_gpus=${NUM_GPU} \
         --data_name=imagenet --data_dir=${DATA_DIR} --variable_update=${VARIABLE_UPDATE} \
         2>&1 | tee ${LOG_FILE}
 	
 }
 
-train googlenet 64 ${JOB_NAME} ${TASK_INDEX}
+#train googlenet 64 ${JOB_NAME} ${TASK_INDEX}
+train googlenet 64 worker ${TASK_INDEX}
+train googlenet 64 ps ${TASK_INDEX}
 #train resnet101 32
 

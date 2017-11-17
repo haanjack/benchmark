@@ -14,10 +14,10 @@ fi
 BENCHMARK_SCRIPT_DIR="$(pwd)"
 VERSION=17.10
 
-nvidia-docker run --rm -ti --name tensorflow-${JOB_NAME} \
+nvidia-docker run --rm -ti --name tensorflow-${JOB_NAME}-${TASK_INDEX} \
     -u $(id -u):$(id -g) \
     --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 \
-    -p 2222:2222 \
+    -p 50000:50000 -p 50001:50001 \
     -v ${DATASET_DIR}:/imagenet \
     -v ${BENCHMARK_SCRIPT_DIR}:/workspace \
     nvcr.io/nvidia/tensorflow:$VERSION bash bench.sh ${JOB_NAME} ${TASK_INDEX}
