@@ -6,8 +6,8 @@ JOB_NAME="worker"
 TASK_INDEX=$2
 PORT=50001
 
-if [ -z "$1" ]; then
-  echo "Usage: docker-run.sh [dataset]"
+if [ -z "$2" ]; then
+  echo "Usage: docker-run.sh [dataset] [task-index]"
   exit
 fi
 
