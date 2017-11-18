@@ -3,7 +3,7 @@
 DATA_DIR=/imagenet
 LOG_DIR=output
 TIMESTAMP=$(date +%m%d%H%M)
-NUM_EPOCHS=100
+NUM_BATCHES=1000
 NUM_GPU=8
 JOB_NAME=$1
 TASK_INDEX=$2
@@ -27,8 +27,7 @@ train() {
         --ps_hosts="${LS_HOST[0]}:${PORT_PS},${LS_HOST[1]}:${PORT_PS}" \
         --worker_hosts="${LS_HOST[0]}:${PORT_WORKER},${LS_HOST[1]}:${PORT_WORKER}" \
         --task_index=${TASK_INDEX} \
-        --local_parameter_device=gpu \
-        --model=${MODEL} --batch_size=${BATCH_SIZE} --num_baches=${NUM_EPOCHS} --num_gpus=${NUM_GPU} \
+        --model=${MODEL} --batch_size=${BATCH_SIZE} --num_batches=${NUM_BATCHES} --num_gpus=${NUM_GPU} \
         --data_name=imagenet --data_dir=${DATA_DIR} --variable_update=${VARIABLE_UPDATE} \
         2>&1 | tee ${LOG_FILE}
 	
