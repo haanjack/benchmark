@@ -12,7 +12,7 @@ fi
 
 # Create the output and temporary directories.
 BENCHMARK_SCRIPT_DIR="$(pwd)"
-VERSION=17.10
+VERSION=17.11
 
 nvidia-docker run -d -ti --name tensorflow-${JOB_NAME}-${TASK_INDEX} \
     -u $(id -u):$(id -g) \

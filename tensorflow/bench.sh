@@ -34,5 +34,6 @@ train() {
 }
 
 train googlenet 64 ${JOB_NAME} ${TASK_INDEX}
-#train resnet101 32
+train googlenet 96 ${JOB_NAME} ${TASK_INDEX}
+train resnet101 32 ${JOB_NAME} ${TASK_INDEX}
 
