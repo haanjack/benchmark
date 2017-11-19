@@ -21,7 +21,7 @@ train() {
     JOB_NAME=$3
     TASK_INDEX=$4
     TIMESTAMP=$(date +%m%d%H%M)
-    LOG_FILE="${LOG_DIR}/output_${MODEL}_e${NUM_EPOCHS}_b${BATCH_SIZE}.${TIMESTAMP}.log"
+    LOG_FILE="${LOG_DIR}/output_tid${TASK_INDEX}_${MODEL}_e${NUM_EPOCHS}_b${BATCH_SIZE}.${TIMESTAMP}.log"
     python tf_cnn_benchmarks/tf_cnn_benchmarks.py \
         --job_name=${JOB_NAME} \
         --ps_hosts="${LS_HOST[0]}:${PORT_PS},${LS_HOST[1]}:${PORT_PS}" \
