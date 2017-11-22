@@ -24,6 +24,7 @@ import argparse
 import os
 import threading
 import time
+import datetime
 
 import numpy as np
 
@@ -1082,6 +1083,11 @@ def setup():
 
 
 def main(_):
+  def print_timestamp(message):
+    time_stamp = time.time()
+    print(message, datetime.datetime.fromtimestamp(time_stamp).strftime('%Y-%m-%d %H:%M:%S'))
+    return time_stamp
+
   setup()
   bench = BenchmarkCNN()
 
@@ -1089,7 +1095,11 @@ def main(_):
   log_fn('TensorFlow:  %i.%i' % (tfversion[0], tfversion[1]))
 
   bench.print_info()
+
+  start_time = print_timestamp("Traing Start -")
   bench.run()
+  end_time = print_timestamp("Training Finish -")
+  print("Elapsed Time -", datetime.datetime.fromtimestamp(end_time - start_time).strftime('%H:%M:%S'))
 
 
 if __name__ == '__main__':
