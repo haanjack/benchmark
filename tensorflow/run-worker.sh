@@ -18,6 +18,7 @@ VERSION=17.11
 nvidia-docker run --rm -ti --name tensorflow-${JOB_NAME}-${TASK_INDEX} \
     -u $(id -u):$(id -g) \
     --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 \
+    --net=host --privileged \
     -p ${PORT}:${PORT} \
     -v ${DATASET_DIR}:/imagenet \
     -v ${BENCHMARK_SCRIPT_DIR}:/workspace \

@@ -17,6 +17,7 @@ VERSION=17.11
 nvidia-docker run -d -ti --name tensorflow-${JOB_NAME}-${TASK_INDEX} \
     -u $(id -u):$(id -g) \
     --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 \
+    --net=host --privileged \
     -p ${PORT}:${PORT} \
     -v ${BENCHMARK_SCRIPT_DIR}:/workspace \
     nvcr.io/nvidia/tensorflow:$VERSION bash bench.sh ${JOB_NAME} ${TASK_INDEX}
