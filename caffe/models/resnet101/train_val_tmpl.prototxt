@@ -5,18 +5,15 @@ layer {
   top: "data"
   top: "label"
   data_param {
-    source: "REPLACEIMAGENETTRAIN"
+    source: "REPLACE_IMAGENET_TRAIN"
     backend: LMDB
-    batch_size: REPLACEBATCHSIZE
+    batch_size: REPLACE_BATCH_SIZE
   }
   transform_param {
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
+    mean_file: "REPLACE_IMAGENET_MEAN"
     crop_size: 224
     mirror: true
     scale: 0.00390625
-#    mean_file: "REPLACEIMAGENETMEAN"
   }
   include: { phase: TRAIN }
 }
@@ -26,18 +23,15 @@ layer {
   top: "data"
   top: "label"
   data_param {
-    source: "REPLACEIMAGENETVAL"
+    source: "REPLACE_IMAGENET_VAL"
     backend: LMDB
-    batch_size: 32
+    batch_size: REPLACE_BATCH_SIZE
   }
   transform_param {
-    mean_value: 104
-    mean_value: 117
-    mean_value: 123
+    mean_file: "REPLACE_IMAGENET_MEAN"
     crop_size: 224
     mirror: false
     scale: 0.00390625
-#    mean_file: "REPLACEIMAGENETMEAN"
   }
   include: { phase: TEST }
 }
