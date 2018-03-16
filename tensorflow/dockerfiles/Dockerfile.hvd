@@ -1,0 +1,48 @@
+# Tensorflow benchmark
+# Author: Jack Han <jahan@nvidia.com>
+#
+# Compatible with Tensorflow r1.5
+# This script utilizes latest NGC container and tensorflow 1.5
+#
+
+ARG BASE_VERSION
+ARG PYTHON_VERSION
+
+FROM nvcr.io/nvidia/tensorflow:${BASE_VERSION}-${PYTHON_VERSION}
+
+MAINTAINER Jack Han <jahan@nvidia.com>
+
+# Copying ssh key files
+COPY ssh/ssh_config /root/.ssh/config
+COPY ssh/id_rsa ssh/id_rsa.pub /root/.ssh/
+
+# install ssh
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openssh-client \
+    openssh-server \
+    iproute2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* 
+
+# configure ssh server and keys
+RUN mkdir /var/run/sshd \
+    && ssh-keygen -A \
+    && sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
+    && sed -i 's/^Port 22/Port 2222/' /etc/ssh/sshd_config \
+    && sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd \
+    && chmod 600 /root/.ssh/config \
+    && chmod 700 /root/.ssh \
+    && cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+
+# Build given tensorflow code
+#WORKDIR /opt/tensorflow-1.5.0
+#RUN git clone --branch=r1.5 --depth=1 https://github.com/tensorflow/tensorflow.git .
+#COPY ./nvbuild.sh .
+#RUN if [ "PYTHON_VERSION" = "py2" ] ; then ./nvbuild.sh --python2.7 ; else ./nvbuild.sh --python3.5 ; fi
+
+# Prepare profile code
+WORKDIR /workspace
+RUN git clone --branch=cnn_tf_v1.5_compatible https://github.com/tensorflow/benchmarks && \
+    git clone https://github.com/nvidia/OpenSeq2Seq
+COPY ./seq2seq_patch ./OpenSeq2Seq
+

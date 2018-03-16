@@ -1,0 +1,5 @@
+Host 10.*
+  Port 2222
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  LogLevel quiet
