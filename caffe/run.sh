@@ -1,21 +1,11 @@
 #!/bin/bash
-# NVIDIA Copyright
 
-if [ -z "$1" ]; then
-  echo "Usage: docker-run.sh [dataset]"
-  exit
-fi
+docker_image="nvcr.io/nvidia/caffe:18.02-py2"
+workspace="/opt/benchmark"
 
-# Create the output and temporary directories.
-DATASET_DIR="$1"
-BENCHMARK_SCRIPT_DIR="$(pwd)"
-VERSION=17.10
+docker_run="nvidia-docker run --rm -ti -u $(id -u):$(id -g)"
+docker_dataset="-v /raid/datasets/imagenet/lmdb:/imagenet"
+docker_workspace="-w ${workspace} -v $(pwd):${workspace}"
+docker_command="/${workspace}/bench.sh"
 
-nvidia-docker run --rm -ti --name caffe \
-    -u $(id -u):$(id -g) \
-    --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 \
-    -v ${DATASET_DIR}:/imagenet \
-    -v ${BENCHMARK_SCRIPT_DIR}:/workspace \
-    nvcr.io/nvidia/caffe:$VERSION bash bench.sh
-
-
+exec ${docker_run} ${docker_dataset} ${docker_workspace} ${docker_image} ${docker_command}
