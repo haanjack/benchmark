@@ -2,13 +2,13 @@
 # Tensorflow benchmark
 # Author: Jack Han <jahan@nvidia.com>
 #
-# Compatible with Tensorflow r1.5
+# Compatible with Tensorflow @NGC
 # This script works with provided dockerfile built image since it uses cloned benchmark code
 #
 
 output_dir="result"
 summary_freq=100
-dataset_dir="/purescratch/jahan/datasets/wmt16_en_dt"
+dataset_dir="/raid/datasets/wmt16_en_dt"
 benchmark_flag=1
 
 function exec()

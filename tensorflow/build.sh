@@ -8,7 +8,7 @@
 base_ver=${1}
 python_ver=${2}
 dockerfile=./dockerfiles/Dockerfile.hvd
-image_name=jahan/tensorflow
+image_name=benchmark/tensorflow
 
 if [[ ${base_ver} == "" ]]; then
     base_ver="18.02"

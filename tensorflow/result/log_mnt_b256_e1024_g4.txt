@@ -1,0 +1,447 @@
+                                                                                                                                                
+================
+== TensorFlow ==
+================
+
+NVIDIA Release 18.02 (build 337101)
+
+Container image Copyright (c) 2018, NVIDIA CORPORATION.  All rights reserved.
+Copyright 2017 The TensorFlow Authors.  All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION.  All rights reserved.
+NVIDIA modifications are covered by the license terms that apply to the underlying project or file.
+
+base dir is /dataset
+data dir is 100
+Cloning into '/dataset/wmt_temp'...
+remote: Counting objects: 5995, done.[K
+Receiving objects:   0% (1/5995)   Receiving objects:   1% (60/5995)   Receiving objects:   2% (120/5995)   Receiving objects:   3% (180/5995)   Receiving objects:   4% (240/5995), 44.01 KiB | 70.00 KiB/s   Receiving objects:   5% (300/5995), 44.01 KiB | 70.00 KiB/s   Receiving objects:   6% (360/5995), 44.01 KiB | 70.00 KiB/s   Receiving objects:   7% (420/5995), 44.01 KiB | 70.00 KiB/s   Receiving objects:   7% (457/5995), 44.01 KiB | 70.00 KiB/s   Receiving objects:   8% (480/5995), 44.01 KiB | 70.00 KiB/s   Receiving objects:   9% (540/5995), 44.01 KiB | 70.00 KiB/s   Receiving objects:  10% (600/5995), 100.01 KiB | 82.00 KiB/s   Receiving objects:  11% (660/5995), 100.01 KiB | 82.00 KiB/s   Receiving objects:  12% (720/5995), 100.01 KiB | 82.00 KiB/s   Receiving objects:  13% (780/5995), 100.01 KiB | 82.00 KiB/s   Receiving objects:  14% (840/5995), 100.01 KiB | 82.00 KiB/s   Receiving objects:  15% (900/5995), 164.01 KiB | 91.00 KiB/s   Receiving objects:  16% (960/5995), 164.01 KiB | 91.00 KiB/s   Receiving objects:  17% (1020/5995), 164.01 KiB | 91.00 KiB/s   Receiving objects:  17% (1033/5995), 164.01 KiB | 91.00 KiB/s   Receiving objects:  18% (1080/5995), 164.01 KiB | 91.00 KiB/s   Receiving objects:  18% (1093/5995), 324.01 KiB | 110.00 KiB/s   Receiving objects:  18% (1137/5995), 516.01 KiB | 126.00 KiB/s   Receiving objects:  19% (1140/5995), 516.01 KiB | 126.00 KiB/s   Receiving objects:  20% (1199/5995), 516.01 KiB | 126.00 KiB/s   Receiving objects:  21% (1259/5995), 516.01 KiB | 126.00 KiB/s   Receiving objects:  22% (1319/5995), 628.01 KiB | 135.00 KiB/s   Receiving objects:  23% (1379/5995), 628.01 KiB | 135.00 KiB/s   Receiving objects:  24% (1439/5995), 628.01 KiB | 135.00 KiB/s   Receiving objects:  25% (1499/5995), 628.01 KiB | 135.00 KiB/s   Receiving objects:  26% (1559/5995), 628.01 KiB | 135.00 KiB/s   Receiving objects:  27% (1619/5995), 628.01 KiB | 135.00 KiB/s   Receiving objects:  27% (1626/5995), 628.01 KiB | 135.00 KiB/s   Receiving objects:  27% (1678/5995), 908.01 KiB | 164.00 KiB/s   Receiving objects:  28% (1679/5995), 908.01 KiB | 164.00 KiB/s   Receiving objects:  29% (1739/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  30% (1799/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  31% (1859/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  32% (1919/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  33% (1979/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  34% (2039/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  35% (2099/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  36% (2159/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  37% (2219/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  38% (2279/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  39% (2339/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  40% (2398/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  41% (2458/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  42% (2518/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  43% (2578/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  44% (2638/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  45% (2698/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  46% (2758/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  47% (2818/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  48% (2878/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  49% (2938/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  50% (2998/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  51% (3058/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  52% (3118/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  53% (3178/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  54% (3238/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  55% (3298/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  56% (3358/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  57% (3418/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  58% (3478/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  59% (3538/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  60% (3597/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  61% (3657/5995), 1.10 MiB | 195.00 KiB/s   Receiving objects:  62% (3717/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  63% (3777/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  64% (3837/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  65% (3897/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  66% (3957/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  67% (4017/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  68% (4077/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  69% (4137/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  70% (4197/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  71% (4257/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  72% (4317/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  73% (4377/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  74% (4437/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  75% (4497/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  75% (4541/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  76% (4557/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  77% (4617/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  78% (4677/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  79% (4737/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  80% (4796/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  81% (4856/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  82% (4916/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  83% (4976/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  84% (5036/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  85% (5096/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  86% (5156/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  87% (5216/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  88% (5276/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  89% (5336/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  90% (5396/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  91% (5456/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  92% (5516/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  93% (5576/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  94% (5636/5995), 1.37 MiB | 238.00 KiB/s   remote: Total 5995 (delta 0), reused 0 (delta 0), pack-reused 5995[K
+Receiving objects:  95% (5696/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  96% (5756/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  97% (5816/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  98% (5876/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects:  99% (5936/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects: 100% (5995/5995), 1.37 MiB | 238.00 KiB/s   Receiving objects: 100% (5995/5995), 1.63 MiB | 252.00 KiB/s, done.
+Resolving deltas:   0% (0/4189)   Resolving deltas:   1% (49/4189)   Resolving deltas:   2% (86/4189)   Resolving deltas:   3% (131/4189)   Resolving deltas:   4% (172/4189)   Resolving deltas:   5% (210/4189)   Resolving deltas:   6% (275/4189)   Resolving deltas:   7% (296/4189)   Resolving deltas:   8% (363/4189)   Resolving deltas:   9% (405/4189)   Resolving deltas:  10% (441/4189)   Resolving deltas:  11% (466/4189)   Resolving deltas:  13% (552/4189)   Resolving deltas:  14% (604/4189)   Resolving deltas:  15% (633/4189)   Resolving deltas:  16% (684/4189)   Resolving deltas:  17% (713/4189)   Resolving deltas:  18% (765/4189)   Resolving deltas:  19% (825/4189)   Resolving deltas:  20% (860/4189)   Resolving deltas:  21% (884/4189)   Resolving deltas:  22% (922/4189)   Resolving deltas:  23% (964/4189)   Resolving deltas:  24% (1013/4189)   Resolving deltas:  25% (1057/4189)   Resolving deltas:  26% (1101/4189)   Resolving deltas:  27% (1147/4189)   Resolving deltas:  28% (1192/4189)   Resolving deltas:  29% (1220/4189)   Resolving deltas:  30% (1258/4189)   Resolving deltas:  35% (1471/4189)   Resolving deltas:  36% (1534/4189)   Resolving deltas:  37% (1551/4189)   Resolving deltas:  38% (1598/4189)   Resolving deltas:  39% (1635/4189)   Resolving deltas:  40% (1676/4189)   Resolving deltas:  45% (1905/4189)   Resolving deltas:  46% (1935/4189)   Resolving deltas:  49% (2053/4189)   Resolving deltas:  50% (2110/4189)   Resolving deltas:  51% (2176/4189)   Resolving deltas:  52% (2186/4189)   Resolving deltas:  53% (2233/4189)   Resolving deltas:  54% (2271/4189)   Resolving deltas:  55% (2307/4189)   Resolving deltas:  56% (2349/4189)   Resolving deltas:  57% (2396/4189)   Resolving deltas:  58% (2432/4189)   Resolving deltas:  59% (2490/4189)   Resolving deltas:  60% (2533/4189)   Resolving deltas:  61% (2576/4189)   Resolving deltas:  62% (2598/4189)   Resolving deltas:  63% (2668/4189)   Resolving deltas:  64% (2705/4189)   Resolving deltas:  65% (2724/4189)   Resolving deltas:  66% (2766/4189)   Resolving deltas:  68% (2853/4189)   Resolving deltas:  69% (2891/4189)   Resolving deltas:  70% (2958/4189)   Resolving deltas:  71% (2977/4189)   Resolving deltas:  72% (3018/4189)   Resolving deltas:  73% (3058/4189)   Resolving deltas:  74% (3135/4189)   Resolving deltas:  76% (3197/4189)   Resolving deltas:  77% (3227/4189)   Resolving deltas:  78% (3269/4189)   Resolving deltas:  79% (3345/4189)   Resolving deltas:  80% (3355/4189)   Resolving deltas:  81% (3410/4189)   Resolving deltas:  82% (3442/4189)   Resolving deltas:  83% (3500/4189)   Resolving deltas:  84% (3530/4189)   Resolving deltas:  85% (3596/4189)   Resolving deltas:  86% (3609/4189)   Resolving deltas:  87% (3645/4189)   Resolving deltas:  88% (3705/4189)   Resolving deltas:  89% (3738/4189)   Resolving deltas:  91% (3823/4189)   Resolving deltas:  92% (3857/4189)   Resolving deltas:  93% (3896/4189)   Resolving deltas:  94% (3966/4189)   Resolving deltas:  95% (3988/4189)   Resolving deltas:  96% (4054/4189)   Resolving deltas:  97% (4065/4189)   Resolving deltas:  98% (4118/4189)   Resolving deltas:  99% (4149/4189)   Resolving deltas: 100% (4189/4189)   Resolving deltas: 100% (4189/4189), done.
+Checking connectivity... done.
+Writing to 100. To change this, set the OUTPUT_DIR environment variable.
+Downloading Europarl v7. This may take a while...
+2018-03-16 05:20:19 URL:http://www.statmt.org/europarl/v7/de-en.tgz [197785698/197785698] -> "100/data/europarl-v7-de-en.tgz" [1]
+Downloading Common Crawl corpus. This may take a while...
+2018-03-16 05:24:57 URL:http://www.statmt.org/wmt13/training-parallel-commoncrawl.tgz [918311367/918311367] -> "100/data/common-crawl.tgz" [1]
+Downloading News Commentary v11. This may take a while...
+2018-03-16 05:25:37 URL:http://data.statmt.org/wmt16/translation-task/training-parallel-nc-v11.tgz [75178032/75178032] -> "100/data/nc-v11.tgz" [1]
+Downloading dev/test sets
+2018-03-16 05:25:53 URL:http://data.statmt.org/wmt16/translation-task/dev.tgz [22836484/22836484] -> "100/data/dev.tgz" [1]
+2018-03-16 05:26:03 URL:http://data.statmt.org/wmt16/translation-task/test.tgz [3785707/3785707] -> "100/data/test.tgz" [1]
+Extracting all files...
+europarl-v7.de-en.de
+europarl-v7.de-en.en
+commoncrawl.cs-en.annotation
+commoncrawl.cs-en.cs
+commoncrawl.cs-en.en
+commoncrawl.de-en.annotation
+commoncrawl.de-en.de
+commoncrawl.de-en.en
+commoncrawl.es-en.annotation
+commoncrawl.es-en.en
+commoncrawl.es-en.es
+commoncrawl.fr-en.annotation
+commoncrawl.fr-en.en
+commoncrawl.fr-en.fr
+commoncrawl.ru-en.annotation
+commoncrawl.ru-en.en
+commoncrawl.ru-en.ru
+training-parallel-nc-v11/
+training-parallel-nc-v11/news-commentary-v11.ru-en.ru
+training-parallel-nc-v11/news-commentary-v11.cs-en.en
+training-parallel-nc-v11/news-commentary-v11.de-en.de
+training-parallel-nc-v11/news-commentary-v11.ru-en.en
+training-parallel-nc-v11/news-commentary-v11.cs-en.cs
+training-parallel-nc-v11/news-commentary-v11.de-en.en
+dev/
+dev/newstest2009-ref.fr.sgm
+dev/newstest2013.es
+dev/newstest2014-deen-src.de.sgm
+dev/newstest2015-ruen-src.ru.sgm
+dev/newstest2010-ref.de.sgm
+dev/newstest2012-src.fr.sgm
+dev/newstest2014-ruen-ref.ru.sgm
+dev/news-test2008.en
+dev/news-test2008.es
+dev/newstest2009-ref.hu.sgm
+dev/newstest2014-csen-ref.en.sgm
+dev/newsdiscussdev2015-enfr-src.en.sgm
+dev/newstest2010.cs
+dev/news-test2008-src.hu.sgm
+dev/.newsdev2014-ref.en.sgm.swp
+dev/newstest2011-ref.cs.sgm
+dev/newstest2011-ref.fr.sgm
+dev/newsdev2016-enro-ref.ro.sgm
+dev/newstest2011.cs
+dev/newstest2009.es
+dev/newstest2011.en
+dev/newsdev2015-enfi-src.en.sgm
+dev/newstest2013.cs
+dev/newstest2012-ref.es.sgm
+dev/newstest2014-csen-ref.cs.sgm
+dev/newsdev2014-src.hi.sgm
+dev/newstest2015-encs-src.en.sgm
+dev/newsdev2014-src.en.sgm
+dev/newsdev2015-enfi-ref.fi.sgm
+dev/newstest2011-ref.es.sgm
+dev/newstest2013-src.ru.sgm
+dev/newstest2012-src.de.sgm
+dev/newsdev2016-tren-ref.en.sgm
+dev/newstest2011-src.fr.sgm
+dev/newssyscomb2009-src.de.sgm
+dev/newstest2012-src.es.sgm
+dev/newstest2010-ref.cs.sgm
+dev/newstest2014-hien-ref.hi.sgm
+dev/newssyscomb2009.de
+dev/newstest2011-ref.en.sgm
+dev/news-test2008.cs
+dev/newstest2010.en
+dev/newssyscomb2009.fr
+dev/newstest2012-ref.en.sgm
+dev/news-test2008.de
+dev/newstest2011.de
+dev/newstest2012.es
+dev/newsdev2016-entr-ref.tr.sgm
+dev/newstest2011-ref.de.sgm
+dev/newsdev2014-ref.hi.sgm
+dev/newstest2013-src.de.sgm
+dev/newstest2012-ref.fr.sgm
+dev/newstest2009.de
+dev/newstest2012.en
+dev/news-test2008-ref.cs.sgm
+dev/newstest2013-ref.fr.sgm
+dev/newsdev2014.hi
+dev/newstest2011-src.cs.sgm
+dev/newssyscomb2009-src.fr.sgm
+dev/newstest2012.ru
+dev/newstest2010-ref.es.sgm
+dev/newstest2010-src.es.sgm
+dev/news-test2008.fr
+dev/newstest2009.en
+dev/newstest2014-ruen-src.ru.sgm
+dev/newssyscomb2009-ref.cs.sgm
+dev/newstest2010-src.fr.sgm
+dev/newssyscomb2009-src.en.sgm
+dev/newstest2015-enru-ref.ru.sgm
+dev/newstest2015-ende-ref.de.sgm
+dev/newstest2013-ref.ru.sgm
+dev/newssyscomb2009-src.it.sgm
+dev/newsdiscusstest2015-enfr-src.en.sgm
+dev/newstest2015-fien-ref.en.sgm
+dev/newstest2010-src.en.sgm
+dev/newstest2009.fr
+dev/newstest2015-ruen-ref.en.sgm
+dev/newstest2013-src.es.sgm
+dev/newstest2014-hien-ref.en.sgm
+dev/news-test2008-src.en.sgm
+dev/newstest2012-ref.cs.sgm
+dev/news-test2008-ref.es.sgm
+dev/news-test2008-ref.fr.sgm
+dev/newstest2014-ruen-ref.en.sgm
+dev/news-test2008-src.es.sgm
+dev/newstest2014-fren-src.en.sgm
+dev/newstest2012-ref.de.sgm
+dev/newstest2014-csen-src.cs.sgm
+dev/newstest2014-csen-src.en.sgm
+dev/newstest2011-src.de.sgm
+dev/newssyscomb2009-src.cs.sgm
+dev/newstest2015-enfi-ref.fi.sgm
+dev/newstest2009-src.it.sgm
+dev/newstest2010-src.de.sgm
+dev/newstest2009-ref.cs.sgm
+dev/newssyscomb2009-ref.es.sgm
+dev/newstest2014-deen-src.en.sgm
+dev/newsdiscusstest2015-fren-ref.en.sgm
+dev/newstest2012.fr
+dev/newsdiscusstest2015-enfr-ref.fr.sgm
+dev/newsdev2016-enro-src.en.sgm
+dev/newstest2009-src.es.sgm
+dev/newstest2013-src.fr.sgm
+dev/newstest2015-deen-src.de.sgm
+dev/newsdev2015-fien-src.fi.sgm
+dev/newsdiscusstest2015-fren-src.fr.sgm
+dev/newstest2014-ruen-src.en.sgm
+dev/newstest2012-src.en.sgm
+dev/newstest2013.fr
+dev/newstest2015-enru-src.en.sgm
+dev/newstest2009-ref.es.sgm
+dev/newstest2011.fr
+dev/newstest2009-ref.en.sgm
+dev/newstest2015-enfi-src.en.sgm
+dev/newstest2009-src.xx.sgm
+dev/newstest2015-encs-ref.cs.sgm
+dev/newstest2013.ru
+dev/newstest2009.cs
+dev/newsdev2014.en
+dev/newstest2014-fren-ref.fr.sgm
+dev/news-test2008-ref.en.sgm
+dev/newssyscomb2009.es
+dev/news-test2008-src.cs.sgm
+dev/newsdev2016-roen-src.ro.sgm
+dev/.newstest2013-ref.en.sgm.swp
+dev/newssyscomb2009-ref.hu.sgm
+dev/newstest2010.de
+dev/newstest2013-ref.cs.sgm
+dev/newstest2013-ref.de.sgm
+dev/newstest2009-src.cs.sgm
+dev/newssyscomb2009.en
+dev/newssyscomb2009-ref.it.sgm
+dev/newstest2009-ref.it.sgm
+dev/newstest2010-ref.fr.sgm
+dev/newstest2015-csen-src.cs.sgm
+dev/newsdev2016-entr-src.en.sgm
+dev/newstest2010.es
+dev/news-test2008-src.de.sgm
+dev/newstest2013.en
+dev/newsdev2016-roen-ref.en.sgm
+dev/newstest2009-src.de.sgm
+dev/newstest2010-ref.en.sgm
+dev/newstest2011-src.es.sgm
+dev/newssyscomb2009-ref.en.sgm
+dev/newstest2014-fren-ref.en.sgm
+dev/newstest2012.cs
+dev/newstest2009-src.hu.sgm
+dev/newstest2009-src.fr.sgm
+dev/newstest2015-ende-src.en.sgm
+dev/newstest2013-src.cs.sgm
+dev/newstest2014-hien-src.hi.sgm
+dev/news-test2008-ref.hu.sgm
+dev/newstest2015-csen-ref.en.sgm
+dev/newstest2013-ref.es.sgm
+dev/newstest2013-ref.en.sgm
+dev/newstest2010-src.cs.sgm
+dev/newstest2010.fr
+dev/newstest2015-deen-ref.en.sgm
+dev/newstest2011.es
+dev/newsdev2016-tren-src.tr.sgm
+dev/newstest2013.de
+dev/newstest2014-fren-src.fr.sgm
+dev/newsdiscussdev2015-fren-ref.en.sgm
+dev/newsdiscussdev2015-fren-src.fr.sgm
+dev/newstest2014-deen-ref.de.sgm
+dev/newstest2013-src.en.sgm
+dev/newssyscomb2009-ref.fr.sgm
+dev/newssyscomb2009-ref.de.sgm
+dev/newstest2009-src.en.sgm
+dev/newstest2009-ref.de.sgm
+dev/newsdiscussdev2015-enfr-ref.fr.sgm
+dev/newssyscomb2009.cs
+dev/newstest2012-ref.ru.sgm
+dev/newstest2014-hien-src.en.sgm
+dev/news-test2008-src.fr.sgm
+dev/newsdev2015-fien-ref.en.sgm
+dev/newsdev2014-ref.en.sgm
+dev/newstest2015-fien-src.fi.sgm
+dev/news-test2008-ref.de.sgm
+dev/newstest2012-src.ru.sgm
+dev/newssyscomb2009-src.es.sgm
+dev/newssyscomb2009-src.hu.sgm
+dev/newstest2014-deen-ref.en.sgm
+dev/newstest2012.de
+dev/newstest2011-src.en.sgm
+dev/newstest2012-src.cs.sgm
+test/newstest2016-csen-ref.en.sgm
+test/newstest2016-csen-src.cs.sgm
+test/newstest2016-deen-ref.en.sgm
+test/newstest2016-deen-src.de.sgm
+test/newstest2016-encs-ref.cs.sgm
+test/newstest2016-encs-src.en.sgm
+test/newstest2016-ende-ref.de.sgm
+test/newstest2016-ende-src.en.sgm
+test/newstest2016-enfi-ref.fi.sgm
+test/newstest2016-enfi-src.en.sgm
+test/newstest2016-enro-ref.ro.sgm
+test/newstest2016-enro-src.en.sgm
+test/newstest2016-enru-ref.ru.sgm
+test/newstest2016-enru-src.en.sgm
+test/newstest2016-entr-ref.tr.sgm
+test/newstest2016-entr-src.en.sgm
+test/newstest2016-fien-ref.en.sgm
+test/newstest2016-fien-src.fi.sgm
+test/newstest2016-roen-ref.en.sgm
+test/newstest2016-roen-src.ro.sgm
+test/newstest2016-ruen-ref.en.sgm
+test/newstest2016-ruen-src.ru.sgm
+test/newstest2016-tren-ref.en.sgm
+test/newstest2016-tren-src.tr.sgm
+test/newstestB2016-enfi-ref.fi.sgm
+test/newstestB2016-enfi-src.en.sgm
+4562102 100/train.en
+4562102 100/train.de
+Cloning moses for data processing
+Cloning into '100/mosesdecoder'...
+remote: Counting objects: 147030, done.[K
+remote: Compressing objects:  12% (1/8)   [Kremote: Compressing objects:  25% (2/8)   [Kremote: Compressing objects:  37% (3/8)   [Kremote: Compressing objects:  50% (4/8)   [Kremote: Compressing objects:  62% (5/8)   [Kremote: Compressing objects:  75% (6/8)   [Kremote: Compressing objects:  87% (7/8)   [Kremote: Compressing objects: 100% (8/8)   [Kremote: Compressing objects: 100% (8/8), done.[K
+Receiving objects:   0% (1/147030)   Receiving objects:   1% (1471/147030)   Receiving objects:   2% (2941/147030), 476.01 KiB | 943.00 KiB/s   Receiving objects:   3% (4411/147030), 476.01 KiB | 943.00 KiB/s   Receiving objects:   4% (5882/147030), 476.01 KiB | 943.00 KiB/s   Receiving objects:   5% (7352/147030), 476.01 KiB | 943.00 KiB/s   Receiving objects:   5% (7360/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:   6% (8822/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:   7% (10293/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:   8% (11763/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:   9% (13233/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:  10% (14703/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:  11% (16174/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:  12% (17644/147030), 1.35 MiB | 1.20 MiB/s   Receiving objects:  13% (19114/147030), 3.28 MiB | 1.71 MiB/s   Receiving objects:  14% (20585/147030), 3.28 MiB | 1.71 MiB/s   Receiving objects:  15% (22055/147030), 3.28 MiB | 1.71 MiB/s   Receiving objects:  16% (23525/147030), 3.28 MiB | 1.71 MiB/s   Receiving objects:  16% (24019/147030), 3.28 MiB | 1.71 MiB/s   Receiving objects:  16% (24719/147030), 9.21 MiB | 3.17 MiB/s   Receiving objects:  17% (24996/147030), 10.95 MiB | 3.13 MiB/s   Receiving objects:  17% (25282/147030), 10.95 MiB | 3.13 MiB/s   Receiving objects:  18% (26466/147030), 14.97 MiB | 3.24 MiB/s   Receiving objects:  19% (27936/147030), 14.97 MiB | 3.24 MiB/s   Receiving objects:  19% (28560/147030), 14.97 MiB | 3.24 MiB/s   Receiving objects:  20% (29406/147030), 17.09 MiB | 3.33 MiB/s   Receiving objects:  21% (30877/147030), 19.17 MiB | 3.63 MiB/s   Receiving objects:  21% (31017/147030), 19.17 MiB | 3.63 MiB/s   Receiving objects:  22% (32347/147030), 21.00 MiB | 3.86 MiB/s   Receiving objects:  23% (33817/147030), 21.00 MiB | 3.86 MiB/s   Receiving objects:  24% (35288/147030), 21.00 MiB | 3.86 MiB/s   Receiving objects:  24% (36434/147030), 23.20 MiB | 4.15 MiB/s   Receiving objects:  25% (36758/147030), 23.20 MiB | 4.15 MiB/s   Receiving objects:  26% (38228/147030), 25.32 MiB | 3.81 MiB/s   Receiving objects:  27% (39699/147030), 25.32 MiB | 3.81 MiB/s   Receiving objects:  28% (41169/147030), 25.32 MiB | 3.81 MiB/s   Receiving objects:  28% (41374/147030), 27.17 MiB | 3.68 MiB/s   Receiving objects:  28% (42131/147030), 30.03 MiB | 3.54 MiB/s   Receiving objects:  29% (42639/147030), 31.93 MiB | 3.59 MiB/s   Receiving objects:  30% (44109/147030), 31.93 MiB | 3.59 MiB/s   Receiving objects:  31% (45580/147030), 31.93 MiB | 3.59 MiB/s   Receiving objects:  31% (46776/147030), 33.38 MiB | 3.44 MiB/s   Receiving objects:  32% (47050/147030), 33.38 MiB | 3.44 MiB/s   Receiving objects:  33% (48520/147030), 36.93 MiB | 3.42 MiB/s   Receiving objects:  33% (48789/147030), 36.93 MiB | 3.42 MiB/s   Receiving objects:  34% (49991/147030), 36.93 MiB | 3.42 MiB/s   Receiving objects:  35% (51461/147030), 38.62 MiB | 3.31 MiB/s   Receiving objects:  36% (52931/147030), 40.36 MiB | 3.26 MiB/s   Receiving objects:  36% (53151/147030), 42.15 MiB | 3.25 MiB/s   Receiving objects:  36% (53151/147030), 46.20 MiB | 3.54 MiB/s   Receiving objects:  36% (53151/147030), 50.00 MiB | 3.64 MiB/s   Receiving objects:  36% (53829/147030), 51.37 MiB | 3.52 MiB/s   Receiving objects:  37% (54402/147030), 51.37 MiB | 3.52 MiB/s   Receiving objects:  38% (55872/147030), 52.93 MiB | 3.49 MiB/s   Receiving objects:  39% (57342/147030), 52.93 MiB | 3.49 MiB/s   Receiving objects:  39% (58601/147030), 54.37 MiB | 3.45 MiB/s   Receiving objects:  40% (58812/147030), 54.37 MiB | 3.45 MiB/s   Receiving objects:  41% (60283/147030), 54.37 MiB | 3.45 MiB/s   Receiving objects:  42% (61753/147030), 55.93 MiB | 3.40 MiB/s   Receiving objects:  43% (63223/147030), 55.93 MiB | 3.40 MiB/s   Receiving objects:  44% (64694/147030), 55.93 MiB | 3.40 MiB/s   Receiving objects:  45% (66164/147030), 55.93 MiB | 3.40 MiB/s   Receiving objects:  46% (67634/147030), 55.93 MiB | 3.40 MiB/s   Receiving objects:  47% (69105/147030), 55.93 MiB | 3.40 MiB/s   Receiving objects:  47% (69847/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  48% (70575/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  49% (72045/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  50% (73515/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  51% (74986/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  52% (76456/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  53% (77926/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  54% (79397/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  55% (80867/147030), 57.47 MiB | 3.35 MiB/s   Receiving objects:  56% (82337/147030), 59.04 MiB | 3.23 MiB/s   Receiving objects:  57% (83808/147030), 59.04 MiB | 3.23 MiB/s   Receiving objects:  58% (85278/147030), 59.04 MiB | 3.23 MiB/s   Receiving objects:  59% (86748/147030), 59.04 MiB | 3.23 MiB/s   Receiving objects:  59% (87783/147030), 59.04 MiB | 3.23 MiB/s   Receiving objects:  60% (88218/147030), 60.84 MiB | 3.18 MiB/s   Receiving objects:  61% (89689/147030), 60.84 MiB | 3.18 MiB/s   Receiving objects:  62% (91159/147030), 60.84 MiB | 3.18 MiB/s   Receiving objects:  63% (92629/147030), 60.84 MiB | 3.18 MiB/s   Receiving objects:  64% (94100/147030), 60.84 MiB | 3.18 MiB/s   Receiving objects:  65% (95570/147030), 62.54 MiB | 3.13 MiB/s   Receiving objects:  66% (97040/147030), 62.54 MiB | 3.13 MiB/s   Receiving objects:  67% (98511/147030), 62.54 MiB | 3.13 MiB/s   Receiving objects:  68% (99981/147030), 62.54 MiB | 3.13 MiB/s   Receiving objects:  69% (101451/147030), 62.54 MiB | 3.13 MiB/s   Receiving objects:  69% (101707/147030), 62.54 MiB | 3.13 MiB/s   Receiving objects:  70% (102921/147030), 64.14 MiB | 3.07 MiB/s   Receiving objects:  71% (104392/147030), 64.14 MiB | 3.07 MiB/s   Receiving objects:  72% (105862/147030), 64.14 MiB | 3.07 MiB/s   Receiving objects:  73% (107332/147030), 64.14 MiB | 3.07 MiB/s   Receiving objects:  74% (108803/147030), 64.14 MiB | 3.07 MiB/s   Receiving objects:  75% (110273/147030), 65.79 MiB | 3.13 MiB/s   Receiving objects:  76% (111743/147030), 65.79 MiB | 3.13 MiB/s   Receiving objects:  76% (112166/147030), 67.58 MiB | 3.18 MiB/s   Receiving objects:  76% (112172/147030), 70.92 MiB | 3.25 MiB/s   Receiving objects:  76% (112172/147030), 74.18 MiB | 3.29 MiB/s   Receiving objects:  76% (112173/147030), 75.95 MiB | 3.29 MiB/s   Receiving objects:  76% (112173/147030), 81.06 MiB | 3.34 MiB/s   Receiving objects:  76% (112173/147030), 84.73 MiB | 3.36 MiB/s   Receiving objects:  77% (113214/147030), 84.73 MiB | 3.36 MiB/s   Receiving objects:  78% (114684/147030), 84.73 MiB | 3.36 MiB/s   Receiving objects:  79% (116154/147030), 84.73 MiB | 3.36 MiB/s   Receiving objects:  80% (117624/147030), 86.63 MiB | 3.41 MiB/s   Receiving objects:  81% (119095/147030), 86.63 MiB | 3.41 MiB/s   Receiving objects:  82% (120565/147030), 86.63 MiB | 3.41 MiB/s   Receiving objects:  83% (122035/147030), 86.63 MiB | 3.41 MiB/s   Receiving objects:  84% (123506/147030), 86.63 MiB | 3.41 MiB/s   Receiving objects:  84% (124289/147030), 86.63 MiB | 3.41 MiB/s   Receiving objects:  84% (124821/147030), 90.41 MiB | 3.52 MiB/s   Receiving objects:  85% (124976/147030), 90.41 MiB | 3.52 MiB/s   Receiving objects:  85% (125256/147030), 97.08 MiB | 3.84 MiB/s   Receiving objects:  85% (125256/147030), 101.96 MiB | 4.18 MiB/s   Receiving objects:  85% (125257/147030), 104.79 MiB | 4.37 MiB/s   Receiving objects:  86% (126446/147030), 111.07 MiB | 4.93 MiB/s   Receiving objects:  87% (127917/147030), 111.07 MiB | 4.93 MiB/s   Receiving objects:  87% (128104/147030), 114.39 MiB | 5.25 MiB/s   Receiving objects:  87% (128105/147030), 118.00 MiB | 5.54 MiB/s   Receiving objects:  87% (128107/147030), 124.63 MiB | 6.02 MiB/s   Receiving objects:  88% (129387/147030), 124.63 MiB | 6.02 MiB/s   Receiving objects:  89% (130857/147030), 124.63 MiB | 6.02 MiB/s   Receiving objects:  90% (132327/147030), 124.63 MiB | 6.02 MiB/s   Receiving objects:  91% (133798/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  92% (135268/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  93% (136738/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  94% (138209/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  95% (139679/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  96% (141149/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  97% (142620/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  98% (144090/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects:  99% (145560/147030), 127.87 MiB | 6.21 MiB/s   remote: Total 147030 (delta 3), reused 9 (delta 3), pack-reused 147019[K
+Receiving objects: 100% (147030/147030), 127.87 MiB | 6.21 MiB/s   Receiving objects: 100% (147030/147030), 129.60 MiB | 6.38 MiB/s, done.
+Resolving deltas:   0% (0/113645)   Resolving deltas:   1% (1138/113645)   Resolving deltas:   2% (2273/113645)   Resolving deltas:   3% (3414/113645)   Resolving deltas:   4% (4557/113645)   Resolving deltas:   5% (5683/113645)   Resolving deltas:   6% (6819/113645)   Resolving deltas:   7% (7987/113645)   Resolving deltas:   8% (9095/113645)   Resolving deltas:   9% (10317/113645)   Resolving deltas:  10% (11409/113645)   Resolving deltas:  11% (12505/113645)   Resolving deltas:  12% (13643/113645)   Resolving deltas:  13% (14777/113645)   Resolving deltas:  14% (15914/113645)   Resolving deltas:  15% (17065/113645)   Resolving deltas:  16% (18201/113645)   Resolving deltas:  17% (19345/113645)   Resolving deltas:  18% (20464/113645)   Resolving deltas:  19% (21595/113645)   Resolving deltas:  20% (22758/113645)   Resolving deltas:  21% (23868/113645)   Resolving deltas:  22% (25043/113645)   Resolving deltas:  23% (26152/113645)   Resolving deltas:  24% (27275/113645)   Resolving deltas:  25% (28434/113645)   Resolving deltas:  26% (29548/113645)   Resolving deltas:  27% (30704/113645)   Resolving deltas:  28% (31821/113645)   Resolving deltas:  29% (32962/113645)   Resolving deltas:  30% (34112/113645)   Resolving deltas:  31% (35438/113645)   Resolving deltas:  32% (36424/113645)   Resolving deltas:  33% (37505/113645)   Resolving deltas:  34% (38720/113645)   Resolving deltas:  35% (39806/113645)   Resolving deltas:  36% (40933/113645)   Resolving deltas:  37% (42213/113645)   Resolving deltas:  38% (43269/113645)   Resolving deltas:  39% (44426/113645)   Resolving deltas:  40% (45476/113645)   Resolving deltas:  41% (46604/113645)   Resolving deltas:  42% (47789/113645)   Resolving deltas:  43% (48921/113645)   Resolving deltas:  44% (50473/113645)   Resolving deltas:  45% (51252/113645)   Resolving deltas:  46% (52286/113645)   Resolving deltas:  47% (53429/113645)   Resolving deltas:  48% (54573/113645)   Resolving deltas:  49% (55767/113645)   Resolving deltas:  50% (56959/113645)   Resolving deltas:  51% (58007/113645)   Resolving deltas:  52% (59349/113645)   Resolving deltas:  53% (60232/113645)   Resolving deltas:  54% (61370/113645)   Resolving deltas:  55% (62518/113645)   Resolving deltas:  55% (62832/113645)   Resolving deltas:  56% (63643/113645)   Resolving deltas:  57% (64788/113645)   Resolving deltas:  58% (66036/113645)   Resolving deltas:  59% (67067/113645)   Resolving deltas:  60% (68212/113645)   Resolving deltas:  61% (69328/113645)   Resolving deltas:  62% (70479/113645)   Resolving deltas:  63% (71955/113645)   Resolving deltas:  64% (73230/113645)   Resolving deltas:  65% (73994/113645)   Resolving deltas:  66% (75021/113645)   Resolving deltas:  67% (76144/113645)   Resolving deltas:  68% (77306/113645)   Resolving deltas:  69% (78430/113645)   Resolving deltas:  70% (79730/113645)   Resolving deltas:  71% (80689/113645)   Resolving deltas:  72% (81826/113645)   Resolving deltas:  73% (82972/113645)   Resolving deltas:  74% (84100/113645)   Resolving deltas:  75% (85374/113645)   Resolving deltas:  76% (86407/113645)   Resolving deltas:  77% (87512/113645)   Resolving deltas:  78% (88667/113645)   Resolving deltas:  79% (90224/113645)   Resolving deltas:  80% (90942/113645)   Resolving deltas:  81% (92243/113645)   Resolving deltas:  82% (93203/113645)   Resolving deltas:  83% (94434/113645)   Resolving deltas:  84% (95498/113645)   Resolving deltas:  85% (96605/113645)   Resolving deltas:  86% (97767/113645)   Resolving deltas:  87% (98884/113645)   Resolving deltas:  88% (100009/113645)   Resolving deltas:  89% (101320/113645)   Resolving deltas:  90% (102308/113645)   Resolving deltas:  91% (103427/113645)   Resolving deltas:  92% (104560/113645)   Resolving deltas:  93% (105796/113645)   Resolving deltas:  94% (106830/113645)   Resolving deltas:  95% (107979/113645)   Resolving deltas:  96% (109101/113645)   Resolving deltas:  97% (110245/113645)   Resolving deltas:  98% (111373/113645)   Resolving deltas:  99% (112563/113645)   Resolving deltas: 100% (113645/113645)   Resolving deltas: 100% (113645/113645), done.
+Checking connectivity... done.
+Tokenizing 100/newstest2009.de...
+Tokenizing 100/newstest2010.de...
+Tokenizing 100/newstest2011.de...
+Tokenizing 100/newstest2012.de...
+Tokenizing 100/newstest2013.de...
+Tokenizing 100/newstest2014.de...
+Tokenizing 100/newstest2015.de...
+Tokenizing 100/newstest2016.de...
+Tokenizing 100/train.de...
+Tokenizing 100/newstest2009.en...
+Tokenizing 100/newstest2010.en...
+Tokenizing 100/newstest2011.en...
+Tokenizing 100/newstest2012.en...
+Tokenizing 100/newstest2013.en...
+Tokenizing 100/newstest2014.en...
+Tokenizing 100/newstest2015.en...
+Tokenizing 100/newstest2016.en...
+Tokenizing 100/train.en...
+Cleaning 100/newstest2009...
+clean-corpus.perl: processing 100/newstest2009.de & .en to 100/newstest2009.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2525  Output sentences:  2517
+Cleaning 100/newstest2009.tok...
+clean-corpus.perl: processing 100/newstest2009.tok.de & .en to 100/newstest2009.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2525  Output sentences:  2509
+Cleaning 100/newstest2010...
+clean-corpus.perl: processing 100/newstest2010.de & .en to 100/newstest2010.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2489  Output sentences:  2488
+Cleaning 100/newstest2010.tok...
+clean-corpus.perl: processing 100/newstest2010.tok.de & .en to 100/newstest2010.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2489  Output sentences:  2485
+Cleaning 100/newstest2011...
+clean-corpus.perl: processing 100/newstest2011.de & .en to 100/newstest2011.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3003  Output sentences:  3002
+Cleaning 100/newstest2011.tok...
+clean-corpus.perl: processing 100/newstest2011.tok.de & .en to 100/newstest2011.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3003  Output sentences:  2994
+Cleaning 100/newstest2012...
+clean-corpus.perl: processing 100/newstest2012.de & .en to 100/newstest2012.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3003  Output sentences:  3000
+Cleaning 100/newstest2012.tok...
+clean-corpus.perl: processing 100/newstest2012.tok.de & .en to 100/newstest2012.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3003  Output sentences:  2996
+Cleaning 100/newstest2013...
+clean-corpus.perl: processing 100/newstest2013.de & .en to 100/newstest2013.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3000  Output sentences:  2997
+Cleaning 100/newstest2013.tok...
+clean-corpus.perl: processing 100/newstest2013.tok.de & .en to 100/newstest2013.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3000  Output sentences:  2990
+Cleaning 100/newstest2014...
+clean-corpus.perl: processing 100/newstest2014.de & .en to 100/newstest2014.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3003  Output sentences:  3003
+Cleaning 100/newstest2014.tok...
+clean-corpus.perl: processing 100/newstest2014.tok.de & .en to 100/newstest2014.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 3003  Output sentences:  3002
+Cleaning 100/newstest2015...
+clean-corpus.perl: processing 100/newstest2015.de & .en to 100/newstest2015.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2169  Output sentences:  2169
+Cleaning 100/newstest2015.tok...
+clean-corpus.perl: processing 100/newstest2015.tok.de & .en to 100/newstest2015.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2169  Output sentences:  2167
+Cleaning 100/newstest2016...
+clean-corpus.perl: processing 100/newstest2016.de & .en to 100/newstest2016.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2999  Output sentences:  2998
+Cleaning 100/newstest2016.tok...
+clean-corpus.perl: processing 100/newstest2016.tok.de & .en to 100/newstest2016.tok.clean, cutoff 1-80, ratio 9
+
+Input sentences: 2999  Output sentences:  2997
+Cleaning 100/train...
+clean-corpus.perl: processing 100/train.de & .en to 100/train.clean, cutoff 1-80, ratio 9
+..........(100000)..........(200000)..........(300000)..........(400000)..........(500000)..........(600000)..........(700000)..........(800000)..........(900000)..........(1000000)..........(1100000)..........(1200000)..........(1300000)..........(1400000)..........(1500000)..........(1600000)..........(1700000)..........(1800000)..........(1900000)..........(2000000)..........(2100000)..........(2200000)..........(2300000)..........(2400000)..........(2500000)..........(2600000)..........(2700000)..........(2800000)..........(2900000)..........(3000000)..........(3100000)..........(3200000)..........(3300000)..........(3400000)..........(3500000)..........(3600000)..........(3700000)..........(3800000)..........(3900000)..........(4000000)..........(4100000)..........(4200000)..........(4300000)..........(4400000)..........(4500000)......
+Input sentences: 4562102  Output sentences:  4524868
+Cleaning 100/train.tok...
+clean-corpus.perl: processing 100/train.tok.de & .en to 100/train.tok.clean, cutoff 1-80, ratio 9
+..........(100000)..........(200000)..........(300000)..........(400000)..........(500000)..........(600000)..........(700000)..........(800000)..........(900000)..........(1000000)..........(1100000)..........(1200000)..........(1300000)..........(1400000)..........(1500000)..........(1600000)..........(1700000)..........(1800000)..........(1900000)..........(2000000)..........(2100000)..........(2200000)..........(2300000)..........(2400000)..........(2500000)..........(2600000)..........(2700000)..........(2800000)..........(2900000)..........(3000000)..........(3100000)..........(3200000)..........(3300000)..........(3400000)..........(3500000)..........(3600000)..........(3700000)..........(3800000)..........(3900000)..........(4000000)..........(4100000)..........(4200000)..........(4300000)..........(4400000)..........(4500000)......
+Input sentences: 4562102  Output sentences:  4500966
+Cloning into '100/subword-nmt'...
+remote: Counting objects: 293, done.[K
+remote: Compressing objects:   2% (1/49)   [Kremote: Compressing objects:   4% (2/49)   [Kremote: Compressing objects:   6% (3/49)   [Kremote: Compressing objects:   8% (4/49)   [Kremote: Compressing objects:  10% (5/49)   [Kremote: Compressing objects:  12% (6/49)   [Kremote: Compressing objects:  14% (7/49)   [Kremote: Compressing objects:  16% (8/49)   [Kremote: Compressing objects:  18% (9/49)   [Kremote: Compressing objects:  20% (10/49)   [Kremote: Compressing objects:  22% (11/49)   [Kremote: Compressing objects:  24% (12/49)   [Kremote: Compressing objects:  26% (13/49)   [Kremote: Compressing objects:  28% (14/49)   [Kremote: Compressing objects:  30% (15/49)   [Kremote: Compressing objects:  32% (16/49)   [Kremote: Compressing objects:  34% (17/49)   [Kremote: Compressing objects:  36% (18/49)   [Kremote: Compressing objects:  38% (19/49)   [Kremote: Compressing objects:  40% (20/49)   [Kremote: Compressing objects:  42% (21/49)   [Kremote: Compressing objects:  44% (22/49)   [Kremote: Compressing objects:  46% (23/49)   [Kremote: Compressing objects:  48% (24/49)   [Kremote: Compressing objects:  51% (25/49)   [Kremote: Compressing objects:  53% (26/49)   [Kremote: Compressing objects:  55% (27/49)   [Kremote: Compressing objects:  57% (28/49)   [Kremote: Compressing objects:  59% (29/49)   [Kremote: Compressing objects:  61% (30/49)   [Kremote: Compressing objects:  63% (31/49)   [Kremote: Compressing objects:  65% (32/49)   [Kremote: Compressing objects:  67% (33/49)   [Kremote: Compressing objects:  69% (34/49)   [Kremote: Compressing objects:  71% (35/49)   [Kremote: Compressing objects:  73% (36/49)   [Kremote: Compressing objects:  75% (37/49)   [Kremote: Compressing objects:  77% (38/49)   [Kremote: Compressing objects:  79% (39/49)   [Kremote: Compressing objects:  81% (40/49)   [Kremote: Compressing objects:  83% (41/49)   [Kremote: Compressing objects:  85% (42/49)   [Kremote: Compressing objects:  87% (43/49)   [Kremote: Compressing objects:  89% (44/49)   [Kremote: Compressing objects:  91% (45/49)   [Kremote: Compressing objects:  93% (46/49)   [Kremote: Compressing objects:  95% (47/49)   [Kremote: Compressing objects:  97% (48/49)   [Kremote: Compressing objects: 100% (49/49)   [Kremote: Compressing objects: 100% (49/49), done.[K
+Receiving objects:   0% (1/293)   Receiving objects:   1% (3/293)   Receiving objects:   2% (6/293)   Receiving objects:   3% (9/293)   Receiving objects:   4% (12/293)   Receiving objects:   5% (15/293)   Receiving objects:   6% (18/293)   Receiving objects:   7% (21/293)   Receiving objects:   8% (24/293)   Receiving objects:   9% (27/293)   Receiving objects:  10% (30/293)   Receiving objects:  11% (33/293)   Receiving objects:  12% (36/293)   Receiving objects:  13% (39/293)   Receiving objects:  14% (42/293)   Receiving objects:  15% (44/293)   Receiving objects:  16% (47/293)   Receiving objects:  17% (50/293)   Receiving objects:  18% (53/293)   Receiving objects:  19% (56/293)   Receiving objects:  20% (59/293)   Receiving objects:  21% (62/293)   Receiving objects:  22% (65/293)   Receiving objects:  23% (68/293)   Receiving objects:  24% (71/293)   Receiving objects:  25% (74/293)   Receiving objects:  26% (77/293)   Receiving objects:  27% (80/293)   Receiving objects:  28% (83/293)   Receiving objects:  29% (85/293)   Receiving objects:  30% (88/293)   Receiving objects:  31% (91/293)   Receiving objects:  32% (94/293)   Receiving objects:  33% (97/293)   Receiving objects:  34% (100/293)   Receiving objects:  35% (103/293)   Receiving objects:  36% (106/293)   Receiving objects:  37% (109/293)   Receiving objects:  38% (112/293)   Receiving objects:  39% (115/293)   Receiving objects:  40% (118/293)   Receiving objects:  41% (121/293)   Receiving objects:  42% (124/293)   Receiving objects:  43% (126/293)   Receiving objects:  44% (129/293)   Receiving objects:  45% (132/293)   Receiving objects:  46% (135/293)   Receiving objects:  47% (138/293)   Receiving objects:  48% (141/293)   Receiving objects:  49% (144/293)   Receiving objects:  50% (147/293)   Receiving objects:  51% (150/293)   Receiving objects:  52% (153/293)   Receiving objects:  53% (156/293)   Receiving objects:  54% (159/293)   Receiving objects:  55% (162/293)   Receiving objects:  56% (165/293)   Receiving objects:  57% (168/293)   Receiving objects:  58% (170/293)   Receiving objects:  59% (173/293)   Receiving objects:  60% (176/293)   Receiving objects:  61% (179/293)   Receiving objects:  62% (182/293)   Receiving objects:  63% (185/293)   Receiving objects:  64% (188/293)   Receiving objects:  65% (191/293)   Receiving objects:  66% (194/293)   Receiving objects:  67% (197/293)   Receiving objects:  68% (200/293)   Receiving objects:  69% (203/293)   Receiving objects:  70% (206/293)   Receiving objects:  71% (209/293)   Receiving objects:  72% (211/293)   Receiving objects:  73% (214/293)   Receiving objects:  74% (217/293)   Receiving objects:  75% (220/293)   Receiving objects:  76% (223/293)   Receiving objects:  77% (226/293)   Receiving objects:  78% (229/293)   remote: Total 293 (delta 48), reused 81 (delta 40), pack-reused 201[K
+Receiving objects:  79% (232/293)   Receiving objects:  80% (235/293)   Receiving objects:  81% (238/293)   Receiving objects:  82% (241/293)   Receiving objects:  83% (244/293)   Receiving objects:  84% (247/293)   Receiving objects:  85% (250/293)   Receiving objects:  86% (252/293)   Receiving objects:  87% (255/293)   Receiving objects:  88% (258/293)   Receiving objects:  89% (261/293)   Receiving objects:  90% (264/293)   Receiving objects:  91% (267/293)   Receiving objects:  92% (270/293)   Receiving objects:  93% (273/293)   Receiving objects:  94% (276/293)   Receiving objects:  95% (279/293)   Receiving objects:  96% (282/293)   Receiving objects:  97% (285/293)   Receiving objects:  98% (288/293)   Receiving objects:  99% (291/293)   Receiving objects: 100% (293/293)   Receiving objects: 100% (293/293), 72.39 KiB | 0 bytes/s, done.
+Resolving deltas:   0% (0/161)   Resolving deltas:   3% (6/161)   Resolving deltas:   7% (12/161)   Resolving deltas:   9% (16/161)   Resolving deltas:  11% (19/161)   Resolving deltas:  12% (20/161)   Resolving deltas:  14% (24/161)   Resolving deltas:  16% (27/161)   Resolving deltas:  18% (30/161)   Resolving deltas:  26% (42/161)   Resolving deltas:  33% (54/161)   Resolving deltas:  44% (71/161)   Resolving deltas:  46% (75/161)   Resolving deltas:  54% (87/161)   Resolving deltas:  55% (90/161)   Resolving deltas:  66% (107/161)   Resolving deltas:  72% (116/161)   Resolving deltas:  73% (118/161)   Resolving deltas:  74% (120/161)   Resolving deltas:  76% (123/161)   Resolving deltas:  83% (134/161)   Resolving deltas:  85% (138/161)   Resolving deltas:  86% (140/161)   Resolving deltas:  87% (141/161)   Resolving deltas:  88% (143/161)   Resolving deltas:  90% (146/161)   Resolving deltas:  91% (147/161)   Resolving deltas:  95% (154/161)   Resolving deltas:  98% (159/161)   Resolving deltas: 100% (161/161)   Resolving deltas: 100% (161/161), done.
+Checking connectivity... done.
+Learning BPE with merge_ops=32000. This may take a while...
+Apply BPE with merge_ops=32000 to tokenized files...
+100/newstest2009.tok.bpe.32000.en
+100/newstest2010.tok.bpe.32000.en
+100/newstest2011.tok.bpe.32000.en
+100/newstest2012.tok.bpe.32000.en
+100/newstest2013.tok.bpe.32000.en
+100/newstest2014.tok.bpe.32000.en
+100/newstest2015.tok.bpe.32000.en
+100/newstest2016.tok.bpe.32000.en
+100/train.tok.bpe.32000.en
+100/newstest2009.tok.clean.bpe.32000.en
+100/newstest2010.tok.clean.bpe.32000.en
+100/newstest2011.tok.clean.bpe.32000.en
+100/newstest2012.tok.clean.bpe.32000.en
+100/newstest2013.tok.clean.bpe.32000.en
+100/newstest2014.tok.clean.bpe.32000.en
+100/newstest2015.tok.clean.bpe.32000.en
+100/newstest2016.tok.clean.bpe.32000.en
+100/train.tok.clean.bpe.32000.en
+100/newstest2009.tok.bpe.32000.de
+100/newstest2010.tok.bpe.32000.de
+100/newstest2011.tok.bpe.32000.de
+100/newstest2012.tok.bpe.32000.de
+100/newstest2013.tok.bpe.32000.de
+100/newstest2014.tok.bpe.32000.de
+100/newstest2015.tok.bpe.32000.de
+100/newstest2016.tok.bpe.32000.de
+100/train.tok.bpe.32000.de
+100/newstest2009.tok.clean.bpe.32000.de
+100/newstest2010.tok.clean.bpe.32000.de
+100/newstest2011.tok.clean.bpe.32000.de
+100/newstest2012.tok.clean.bpe.32000.de
+100/newstest2013.tok.clean.bpe.32000.de
+100/newstest2014.tok.clean.bpe.32000.de
+100/newstest2015.tok.clean.bpe.32000.de
+100/newstest2016.tok.clean.bpe.32000.de
+100/train.tok.clean.bpe.32000.de
+All done.
+edited train script is writen into /dataset/wmt_temp/train_gnmt_conf.json
+logs can be found at /dataset/wmt_temp/gnmt_on_4_GPUs_batchsize_256
+/workspace/OpenSeq2Seq/try_gnmt_en2de.sh: line 57: [: /dataset: integer expression expected
+launching tensor-board
+start training Nvidia flavor GNMT with 4 GPUs, and batch size of 256
+{
+    "src_vocab_file": "100/vocab.bpe.32000",
+    "tgt_vocab_file": "100/vocab.bpe.32000",
+
+    "batch_size" : 256,
+
+    "source_file": "100/train.tok.clean.bpe.32000.de",
+    "target_file": "100/train.tok.clean.bpe.32000.en",
+
+    "source_file_eval": "100/newstest2013.tok.bpe.32000.de",
+TensorBoard 0.4.0 at http://998ad63fe888:6006 (Press CTRL+C to quit)
+Traceback (most recent call last):
+  File "run.py", line 286, in <module>
+    tf.app.run()
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/platform/app.py", line 48, in run
+    _sys.exit(main(_sys.argv[:1] + flags_passthrough))
+  File "run.py", line 266, in main
+    in_config = json.load(data_file)
+  File "/usr/lib/python2.7/json/__init__.py", line 291, in load
+    **kw)
+  File "/usr/lib/python2.7/json/__init__.py", line 339, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 364, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 382, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+ValueError: No JSON object could be decoded
