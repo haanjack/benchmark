@@ -9,8 +9,14 @@
 dataset_dir=/datasets/imagenet/imagenet_resized352
 output_dir="output"
 
+docker_image=tensorflow:devel-gpu-1.8
+docker_version=devel-gpu-1.8
+nv_docker_image=nvcr.io/nvidia/tensorflow
+nv_docker_version=18.03-py3
+
 num_epochs=0
-num_samples=1281167 # ILSVRC2012
+num_samples=128167 # ILSVRC2012
+num_samples=20580
 
 function exec()
 {
@@ -25,7 +31,7 @@ function exec()
     if [[ ${num_epochs} -gt 0 ]]; then
         num_batches=$((${num_epochs} * ${num_samples} / ${batch_size} / ${num_gpu}))
     else
-        num_batches=300
+        num_batches=500
     fi
 
     fp16_nv_option=
@@ -56,11 +62,16 @@ function exec()
     log_file=${output_dir}/log_${model}_${precision}_b${batch_size}_g${num_gpu}.txt
 
     # benchmark code
-    nvidia-docker run --rm -ti --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 \
+    start_time="$(date -u +%s)"
+    time nvidia-docker run --rm -ti --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 \
         -u $(id -u):$(id -g) \
         -v ${dataset_dir}:/imagenet \
         ${image}:${tag} \
             ${bmt_script} |& tee ${log_file}
+    end_time="$(date -u +%s)"
+
+    elapsed="$(($end_time - $start_time))"
+    echo "Total of $elapsed secondes elapsed" |& tee -a ${log_file}
 
 }
 
@@ -71,13 +82,12 @@ fi
 
 # Benchmark example
 # exec {docker image} {tag} {model-name} {batch_size} {num_gpu} {fp16 (0; false, 1; true)}
-docker_image=jahan/tensorflow
-docker_image=nvcr.io/nvidia/tensorflow
-exec ${docker_image} 18.02-py2 nv resnet50 64 1 0
-exec ${docker_image} 18.02-py2 nv resnet50 64 2 0
-exec ${docker_image} 18.02-py2 nv resnet50 64 4 0
-exec ${docker_image} 18.02-py2 nv resnet50 64 8 0
-exec ${docker_image} 18.02-py2 nv resnet50 64 1 1
-exec ${docker_image} 18.02-py2 nv resnet50 64 2 1
-exec ${docker_image} 18.02-py2 nv resnet50 64 4 1
-exec ${docker_image} 18.02-py2 nv resnet50 64 8 1
+exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 1 1
+exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 2 1
+exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 4 1
+exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 8 1
+
+exec ${docker_image} ${docker_version} tf resnet50 64 1 1
+exec ${docker_image} ${docker_version} tf resnet50 64 2 1
+exec ${docker_image} ${docker_version} tf resnet50 64 4 1
+exec ${docker_image} ${docker_version} tf resnet50 64 8 1
