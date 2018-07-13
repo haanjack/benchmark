@@ -106,7 +106,7 @@ RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/lib
 WORKDIR /workspace
 
 # Clone some benchmark codes
-RUN git clone https://github.com/tensorflow/benchmarks && \
+RUN git clone https://github.com/tensorflow/benchmarks
 RUN git clone https://github.com/nvidia/OpenSeq2Seq
 COPY ./seq2seq_patch ./OpenSeq2Seq
 
