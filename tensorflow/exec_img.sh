@@ -2,21 +2,21 @@
 # Tensorflow benchmark
 # Author: Jack Han <jahan@nvidia.com>
 #
-# Compatible with Tensorflow r1.5
+# Compatible with Tensorflow r1.9
 # This script works with provided dockerfile built image since it uses cloned benchmark code
 #
 
 dataset_dir=/datasets/imagenet/imagenet_resized352
+dataset_dir=/raid/datasets/imagenet/tfrecord
 output_dir="output"
 
-docker_image=tensorflow:devel-gpu-1.8
-docker_version=devel-gpu-1.8
+docker_image=hanjack/tensorflow
+docker_version=devel-gpu-1.9
 nv_docker_image=nvcr.io/nvidia/tensorflow
-nv_docker_version=18.03-py3
+nv_docker_version=18.06-py3
 
 num_epochs=0
-num_samples=128167 # ILSVRC2012
-num_samples=20580
+num_samples=1281167 # ILSVRC2012
 
 function exec()
 {
@@ -27,6 +27,7 @@ function exec()
     batch_size=${5}
     num_gpu=${6}
     use_fp16=${7}
+    layers=${8}
 
     if [[ ${num_epochs} -gt 0 ]]; then
         num_batches=$((${num_epochs} * ${num_samples} / ${batch_size} / ${num_gpu}))
@@ -53,13 +54,17 @@ function exec()
               --variable_update=replicated --all_reduce_spec=nccl --use_fp16=${use_fp16}"
       ;;
       "nv")
-        bmt_script="python /workspace/nvidia-examples/cnn/nvcnn.py \
-                --model=${model} --batch_size=${batch_size} --num_gpus=${num_gpu} --num_batches=${num_batches} \
-                --data_dir=/imagenet ${fp16_nv_option}"
+        # bmt_script="python /workspace/nvidia-examples/cnn/nvcnn.py \
+        #        --model=${model} --batch_size=${batch_size} --num_gpus=${num_gpu} --num_batches=${num_batches} \
+        #        --data_dir=/imagenet ${fp16_nv_option}"
+	bmt_script="mpiexec --allow-run-as-root -np ${num_gpu} \
+	    python /workspace/nvidia-examples/cnn/${model}.py --layers=${layers} \
+	    --data_dir=/imagenet --batch_size=${batch_size} --num_iter=${num_batches} --iter_unit batch --precision=${precision}"
       ;;
     esac
 
     log_file=${output_dir}/log_${model}_${precision}_b${batch_size}_g${num_gpu}.txt
+    echo $bmt_script
 
     # benchmark code
     start_time="$(date -u +%s)"
@@ -81,11 +86,11 @@ if [ ! -d ${output_dir} ]; then
 fi
 
 # Benchmark example
-# exec {docker image} {tag} {model-name} {batch_size} {num_gpu} {fp16 (0; false, 1; true)}
-exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 1 1
-exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 2 1
-exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 4 1
-exec ${nv_docker_image} ${nv_docker_version} nv resnet50 64 8 1
+# exec {docker image} {tag} {model-name} {batch_size} {num_gpu} {fp16 (0; false, 1; true)} {layers}
+#exec ${nv_docker_image} ${nv_docker_version} nv resnet 64 1 1 50
+#exec ${nv_docker_image} ${nv_docker_version} nv resnet 64 2 1 50
+#exec ${nv_docker_image} ${nv_docker_version} nv resnet 64 4 1 50
+#exec ${nv_docker_image} ${nv_docker_version} nv resnet 64 8 1 50
 
 exec ${docker_image} ${docker_version} tf resnet50 64 1 1
 exec ${docker_image} ${docker_version} tf resnet50 64 2 1
