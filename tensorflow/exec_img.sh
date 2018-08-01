@@ -138,7 +138,7 @@ if [ ! -d ${OUTPUT_DIR} ]; then
 fi
 
 # Benchmark example
-# exec {docker image} {tag} {model-name} {batch_size} {num_gpu} {fp16 (0; false, 1; true)} {layers}
+# exec {docker image} {script option} {model-name} {batch_size} {num_gpu} {fp16 (0; false, 1; true)} {layers}
 #exec ${nv_docker_image} nv resnet 64 1 1 50
 #exec ${nv_docker_image} nv resnet 64 2 1 50
 #exec ${nv_docker_image} nv resnet 64 4 1 50
