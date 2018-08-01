@@ -7,6 +7,7 @@
 
 ARG BASE_VERSION
 ARG PYTHON_VERSION
+ARG TF_VERSION
 
 FROM nvcr.io/nvidia/tensorflow:${BASE_VERSION}-${PYTHON_VERSION}
 
@@ -34,15 +35,9 @@ RUN mkdir /var/run/sshd \
     && chmod 700 /root/.ssh \
     && cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 
-# Build given tensorflow code
-#WORKDIR /opt/tensorflow-1.5.0
-#RUN git clone --branch=r1.5 --depth=1 https://github.com/tensorflow/tensorflow.git .
-#COPY ./nvbuild.sh .
-#RUN if [ "PYTHON_VERSION" = "py2" ] ; then ./nvbuild.sh --python2.7 ; else ./nvbuild.sh --python3.5 ; fi
-
 # Prepare profile code
 WORKDIR /workspace
-RUN git clone --branch=cnn_tf_v1.5_compatible https://github.com/tensorflow/benchmarks && \
+RUN git clone --branch=cnn_tf_v${TF_VERSION}_compatible https://github.com/tensorflow/benchmarks && \
     git clone https://github.com/nvidia/OpenSeq2Seq
 COPY ./seq2seq_patch ./OpenSeq2Seq
 
