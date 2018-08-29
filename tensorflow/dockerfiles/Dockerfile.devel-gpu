@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libhdf5-serial-dev \
         libpng12-dev \
         libzmq3-dev \
+        libboost-all-dev \
         pkg-config \
         python-dev \
         rsync \
@@ -78,6 +79,19 @@ RUN mkdir /bazel && \
     cd / && \
     rm -f /bazel/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh
 
+
+## seq2seq benchmark prep..
+RUN git clone https://github.com/nvidia/OpenSeq2Seq
+WORKDIR /workspace/OpenSeq2Seq
+RUN cd ctc_decoder_with_lm && \
+    git clone https://github.com/kpu/kenlm && \
+    cd kenlm && \
+    mkdir -p build && \
+    cd build && \
+    cmake .. && \
+    make -j
+
+
 # Download and build TensorFlow.
 WORKDIR /tensorflow
 RUN git clone --branch=r${TF_VERSION} --depth=1 https://github.com/tensorflow/tensorflow.git .
@@ -90,13 +104,17 @@ ENV TF_CUDA_COMPUTE_CAPABILITIES=3.0,3.5,5.2,6.0,6.1,7.0
 ENV TF_CUDA_VERSION=9.0
 ENV TF_CUDNN_VERSION=7
 
+RUN ln -s /workspace/OpenSeq2Seq/ctc_decoder_with_lm ./
+
 RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
     LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
     tensorflow/tools/ci_build/builds/configured GPU \
     bazel build -c opt --copt=-mavx --config=cuda \
         --copt=-mavx2 --copt=-mfma --copt=-msse4.2 --copt=-mfpmath=both -k \
 	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=0" \
-        tensorflow/tools/pip_package:build_pip_package && \
+        tensorflow/tools/pip_package:build_pip_package \
+        //tensorflow:libtensorflow_cc.so \
+        //tensorflow:libtensorflow_framework.so //ctc_decoder_with_lm:libctc_decoder_with_kenlm.so //ctc_decoder_with_lm:generate_trie && \
     rm /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
     bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/pip && \
     pip --no-cache-dir install --upgrade /tmp/pip/tensorflow-*.whl && \
@@ -108,8 +126,6 @@ WORKDIR /workspace
 
 # Clone some benchmark codes
 RUN git clone --branch cnn_tf_v${TF_VERSION}_compatible https://github.com/tensorflow/benchmarks
-RUN git clone https://github.com/nvidia/OpenSeq2Seq
-COPY ./seq2seq_patch ./OpenSeq2Seq
 
 # TensorBoard
 EXPOSE 6006
